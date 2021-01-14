@@ -1,4 +1,7 @@
 package com.tykaway.myweather.repositories
 
-class WeatherRepository {
+import com.tykaway.myweather.helpers.RetrofitHelper
+
+class WeatherRepository(retrofitHelper: RetrofitHelper) {
+
 }

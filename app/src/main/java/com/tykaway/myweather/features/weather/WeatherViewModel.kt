@@ -5,4 +5,7 @@ import com.tykaway.myweather.base.viewmodels.BaseVieModel
 import com.tykaway.myweather.repositories.WeatherRepository
 
 class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(application) {
+
+
+
 }

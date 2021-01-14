@@ -109,7 +109,7 @@
                     android:id="@+id/tvMessage"
                     style="@style/MediumLightTextView"
                     tools:text="30 / 26 Feels like 30"
-                    android:text="@{`26 Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
+                    android:text="@{weatherViewModel.weather.current.wind_speed + ` / ` + weatherViewModel.weather.current.humidity + ` Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"

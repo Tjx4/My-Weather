@@ -1,4 +1,4 @@
-package com.tykaway.myweather.features
+package com.tykaway.myweather.features.weather
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

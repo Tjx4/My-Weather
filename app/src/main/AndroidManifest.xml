@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWeather">
-        <activity android:name=".features.WeatherActivity"></activity>
+        <activity android:name=".features.weather.WeatherActivity"></activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".features.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

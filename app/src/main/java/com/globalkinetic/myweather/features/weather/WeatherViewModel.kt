@@ -4,13 +4,18 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
+import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
-class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(application) {
+class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(
+    application
+) {
 
     private var _showLoading: MutableLiveData<Boolean> = MutableLiveData()
     val showLoading: MutableLiveData<Boolean>
@@ -38,7 +43,12 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
 
     init {
         val latLng = LatLng(-25.7523497, 28.2083034)
-        val userLocation = UserLocation("SunnySide", "Decription of this place", latLng, "Wed 11 Jan 13:00 PM")
+        val userLocation = UserLocation(
+            "SunnySide",
+            "Decription of this place",
+            latLng,
+            "Wed 11 Jan 13:00 PM"
+        )
         checkAndSetLocation(userLocation)
     }
 
@@ -62,6 +72,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
             uiScope.launch {
                 _weather.value = weather
                 _description.value = weather?.current?.weather?.get(0)?.description ?: ""
+                _currentDateTime.value =  getFormatedDate(weather?.current?.dt ?: 0)
             }
         }
 

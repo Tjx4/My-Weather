@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.globalkinetic.myweather.R
+import com.globalkinetic.myweather.helpers.getFormatedTime
 import com.globalkinetic.myweather.models.Current
 
 class HourlyAdapter(context: Context, private val hourly: List<Current>?) : RecyclerView.Adapter<HourlyAdapter.ViewHolder>() {
@@ -22,7 +23,7 @@ class HourlyAdapter(context: Context, private val hourly: List<Current>?) : Recy
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val searchType = hourly?.get(position)
 
-        holder.nameTv.text = searchType?.clouds.toString()
+        holder.nameTv.text = getFormatedTime(searchType?.dt ?: 0)
         holder.cloudsTv.text = searchType?.clouds.toString()
         holder.tempTv.text = searchType?.temp.toString()
     }

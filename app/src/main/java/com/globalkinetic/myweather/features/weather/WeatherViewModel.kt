@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
+import com.globalkinetic.myweather.converter.fahrenheitToCelsius
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
@@ -24,6 +25,10 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     private val _isNoLocation: MutableLiveData<Boolean> = MutableLiveData()
     val isNoLocation: MutableLiveData<Boolean>
         get() = _isNoLocation
+
+    private var _temprature: MutableLiveData<Int> = MutableLiveData()
+    val temprature: MutableLiveData<Int>
+        get() = _temprature
 
     private var _weather: MutableLiveData<Weather> = MutableLiveData()
     val weather: MutableLiveData<Weather>
@@ -71,6 +76,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
 
             uiScope.launch {
                 _weather.value = weather
+                _temprature.value = fahrenheitToCelsius(weather?.current?.temp ?: 0.0)
                 _description.value = weather?.current?.weather?.get(0)?.description ?: ""
                 _currentDateTime.value =  getFormatedDate(weather?.current?.dt ?: 0)
             }

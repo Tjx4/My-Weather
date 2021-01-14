@@ -24,7 +24,7 @@ class HourlyAdapter(context: Context, private val hourly: List<Current>?) : Recy
         val searchType = hourly?.get(position)
 
         holder.nameTv.text = getFormatedTime(searchType?.dt ?: 0)
-        holder.cloudsTv.text = searchType?.clouds.toString()
+        holder.cloudsTv.text =   "${searchType?.clouds ?: 0}%"
         holder.tempTv.text = searchType?.temp.toString()
     }
 

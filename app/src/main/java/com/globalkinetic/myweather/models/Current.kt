@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class Current(
     @SerializedName("weather") var weather: List<WeatherInfo?>,
     @SerializedName("humidity") var humidity: Int?,
-    @SerializedName("clouds") var clouds: Int?,
+    @SerializedName("clouds") var clouds: Long?,
     @SerializedName("temp") var temp: Double?,
     @SerializedName("dt") var dt: Long?,
     @SerializedName("feels_like") var feels_like: Double?,

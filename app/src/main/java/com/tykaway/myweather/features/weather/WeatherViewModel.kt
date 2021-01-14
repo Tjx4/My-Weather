@@ -1,4 +1,8 @@
 package com.tykaway.myweather.features.weather
 
-class WeatherViewModel {
+import android.app.Application
+import com.tykaway.myweather.base.viewmodels.BaseVieModel
+import com.tykaway.myweather.repositories.WeatherRepository
+
+class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(application) {
 }

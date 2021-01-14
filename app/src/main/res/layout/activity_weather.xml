@@ -14,13 +14,157 @@
         android:background="@drawable/splash_background_gradient"
         tools:context=".features.weather.WeatherActivity">
 
+        <LinearLayout
+            android:id="@+id/llCurrentLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/large_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:id="@+id/imgLocation"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_location_light"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/MediumLightTextView"
+                android:text="Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDateTime"
+            style="@style/MediumLightTextView"
+            android:text="Wed 9 Jan 2021 10:00 Am"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintTop_toBottomOf="@+id/llCurrentLocation"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/llCurrentTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintTop_toBottomOf="@+id/tvDateTime"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:id="@+id/imgClouds"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_cloud_light"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/XLargeLightTextView"
+                android:text="29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+
+            <TextView
+                style="@style/SmallLightTextView"
+                android:text="o"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:textStyle="bold"
+                android:layout_gravity="top"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvMessage"
+            style="@style/MediumLightTextView"
+            android:text="30 / 26 Feels like 30 cloudy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintTop_toBottomOf="@+id/llCurrentTemp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+
+        <LinearLayout
+            style="@style/DetailsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            app:layout_constraintTop_toBottomOf="@+id/tvMessage"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:id="@+id/imgPrecip"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_cloud_light"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/SmallLightTextView"
+                android:text="Precipitation"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:background="@color/lightBackground"/>
+
+            <ImageView
+                android:id="@+id/imgSun"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:src="@drawable/ic_sun"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/SmallLightTextView"
+                android:text="UV index Low"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
         <com.wang.avi.AVLoadingIndicatorView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/avlHeroLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:indicatorName="BallPulseIndicator"
-            app:indicatorColor="@color/black"
+            app:indicatorColor="@color/lightText"
             android:layout_marginTop="@dimen/large_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

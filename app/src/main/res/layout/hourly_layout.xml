@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tvTime"
-        style="@style/SmallLightTextView"
+        style="@style/MediumLightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="8:30 am"
@@ -39,9 +39,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+
+    <View
+        android:id="@+id/vLine"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        android:background="@drawable/divider_line_background"
+        android:layout_marginTop="@dimen/xsmall_margin"
+        app:layout_constraintTop_toBottomOf="@+id/tvClouds"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvTemp"/>
+
     <TextView
         android:id="@+id/tvTemp"
-        style="@style/SmallLightTextView"
+        style="@style/MediumLightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="27"
@@ -49,9 +61,19 @@
         android:layout_marginTop="@dimen/xsmall_margin"
         android:layout_marginBottom="@dimen/medium_margin"
         app:layout_constraintVertical_bias="1"
-        app:layout_constraintTop_toBottomOf="@+id/tvClouds"
+        app:layout_constraintTop_toBottomOf="@+id/vLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <TextView
+        style="@style/XSmallLightTextView"
+        android:text="o"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/tvTemp"
+        app:layout_constraintLeft_toRightOf="@+id/tvTemp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

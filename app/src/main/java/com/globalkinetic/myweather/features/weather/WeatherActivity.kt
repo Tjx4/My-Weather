@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.globalkinetic.myweather.R
 import com.globalkinetic.myweather.adapters.HourlyAdapter
 import com.globalkinetic.myweather.base.activities.BaseActivity
@@ -65,6 +67,8 @@ class WeatherActivity : BaseActivity(), HourlyAdapter.HourlyClickListener {
         var hourlyAdapter = HourlyAdapter(this, weather.hourly)
         hourlyAdapter.setHourlyClickListener(this)
         rvHourly?.adapter = hourlyAdapter
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(rvHourly)
     }
 
     override fun onHourlyClickListener(view: View, position: Int) {

@@ -14,7 +14,7 @@ import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import kotlinx.android.synthetic.main.activity_weather.*
 
-class WeatherActivity : BaseActivity() {
+class WeatherActivity : BaseActivity(), HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var weatherViewModel: WeatherViewModel
 
@@ -65,6 +65,10 @@ class WeatherActivity : BaseActivity() {
         var hourlyAdapter = HourlyAdapter(this, weather.hourly)
         hourlyAdapter.setHourlyClickListener(this)
         rvHourly?.adapter = hourlyAdapter
+    }
+
+    override fun onHourlyClickListener(view: View, position: Int) {
+
     }
 
 }

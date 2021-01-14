@@ -55,6 +55,13 @@
     <style name="SmallLightTextView" parent="smallTextView">
         <item name="android:textColor">@color/lightText</item>
     </style>
+    <style name="xsmallTextView" parent="BaseTextView">
+        <item name="android:textSize">@dimen/xsmall_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="XSmallLightTextView" parent="xsmallTextView">
+        <item name="android:textColor">@color/lightText</item>
+    </style>
     <style name="DetailsContainer" >
         <item name="android:background">@drawable/details_background</item>
         <item name="android:paddingTop">@dimen/large_margin</item>

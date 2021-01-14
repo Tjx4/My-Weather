@@ -14,6 +14,8 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">sans-serif-condensed-light</item>
     </style>
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+    </style>
     <style name="NoActionBarTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

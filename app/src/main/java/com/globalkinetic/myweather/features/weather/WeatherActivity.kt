@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.SnapHelper
 import com.globalkinetic.myweather.R
 import com.globalkinetic.myweather.adapters.HourlyAdapter
 import com.globalkinetic.myweather.base.activities.BaseActivity
+import com.globalkinetic.myweather.base.activities.BaseMapActivity
 import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
+import com.globalkinetic.myweather.helpers.showErrorAlert
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import kotlinx.android.synthetic.main.activity_weather.*
 
-class WeatherActivity : BaseActivity(), HourlyAdapter.HourlyClickListener {
+class WeatherActivity : BaseMapActivity(), HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var weatherViewModel: WeatherViewModel
 
@@ -34,6 +36,16 @@ class WeatherActivity : BaseActivity(), HourlyAdapter.HourlyClickListener {
         binding.lifecycleOwner = this
 
         addObservers()
+
+        if(isGooglePlayServicesAvailable()){
+            checkLocationPermissionAndContinue()
+        }
+        else{
+            clContent.visibility = View.GONE
+            showErrorAlert(this, getString(R.string.google_play_error), getString(R.string.no_play_services), getString(R.string.ok)) {
+                finish()
+            }
+        }
     }
 
     private fun addObservers() {

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">My Weather</string>
     <string name="uv_index">UV index</string>
+    <string name="google_play_error">Google play error</string>
+    <string name="no_play_services">Please ensure that Google play services are active on your phone</string>
+    <string name="ok">Ok</string>
 </resources>

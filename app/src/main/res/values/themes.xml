@@ -25,6 +25,7 @@
     <style name="BaseTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-condensed-light</item>
     </style>
     <style name="xlargeTextView" parent="BaseTextView">
         <item name="android:textSize">@dimen/xlarge_text</item>

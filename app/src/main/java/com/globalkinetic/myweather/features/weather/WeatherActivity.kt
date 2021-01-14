@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.globalkinetic.myweather.R
 import com.globalkinetic.myweather.base.activities.BaseActivity
 import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
+import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
+import kotlinx.android.synthetic.main.activity_weather.*
 
 class WeatherActivity : BaseActivity() {
     private lateinit var binding: ActivityWeatherBinding
@@ -31,16 +33,24 @@ class WeatherActivity : BaseActivity() {
     }
 
     private fun addObservers() {
+        weatherViewModel.currentLocation.observe(this, Observer { onCurrentLocationSet(it) })
         weatherViewModel.showLoading.observe(this, Observer { onShowLoading(it) })
         weatherViewModel.weather.observe(this, Observer { onWeatherSet(it) })
     }
 
+
+    private fun onCurrentLocationSet(location: UserLocation) {
+        weatherViewModel.getAndSetWeather(location)
+    }
+
     private fun onShowLoading(isBusy: Boolean) {
-      //  avlHeroLoader.visibility = View.VISIBLE
+        avlHeroLoader.visibility = View.VISIBLE
+        clContent.visibility = View.INVISIBLE
     }
 
     private fun onWeatherSet(weather: Weather) {
-        //  avlHeroLoader.visibility = View.GONE
+        avlHeroLoader.visibility = View.GONE
+        clContent.visibility = View.VISIBLE
     }
 
 }

@@ -8,197 +8,200 @@
             type="com.globalkinetic.myweather.features.weather.WeatherViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/splash_background_gradient"
         tools:context=".features.weather.WeatherActivity">
 
-        <LinearLayout
-            android:id="@+id/llCurrentLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/xlarge_margin"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <ImageView
-                android:id="@+id/imgLocation"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_location_light"
-                android:layout_gravity="center"/>
-
-            <TextView
-                style="@style/MediumLightTextView"
-                android:text="Location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvDateTime"
-            style="@style/MediumLightTextView"
-            android:text="Wed 9 Jan 2021 10:00 Am"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintTop_toBottomOf="@+id/llCurrentLocation"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <LinearLayout
-            android:id="@+id/llCurrentTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintTop_toBottomOf="@+id/tvDateTime"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <ImageView
-                android:id="@+id/imgClouds"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_cloud_light"
-                android:layout_gravity="center"/>
-
-            <TextView
-                style="@style/XLargeLightTextView"
-                android:text="29"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-
-
-            <TextView
-                style="@style/SmallLightTextView"
-                android:text="o"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:textStyle="bold"
-                android:layout_gravity="top"/>
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tvMessage"
-            style="@style/MediumLightTextView"
-            android:text="30 / 26 Feels like 30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintTop_toBottomOf="@+id/llCurrentTemp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/tvBreakDown"
-            style="@style/MediumLightTextView"
-            android:text="Cloudy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintTop_toBottomOf="@+id/tvMessage"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/tvMoreInfo"
-            style="@style/MediumLightTextView"
-            android:text="More details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/xlarge_margin"
-            android:layout_marginHorizontal="@dimen/large_margin"
-            app:layout_constraintTop_toBottomOf="@+id/tvBreakDown"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="1"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/DetailsContainer"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginHorizontal="@dimen/small_margin"
-            app:layout_constraintTop_toBottomOf="@+id/tvMoreInfo"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imgPrecip"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_pricip_light"
-                android:layout_marginHorizontal="@dimen/xsmall_margin"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/tvPrecip"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tvPrecip"
-                style="@style/SmallLightTextView"
-                android:text="Precipitation"
-                android:layout_marginRight="@dimen/small_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintRight_toLeftOf="@+id/vDivider"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                <LinearLayout
+                    android:id="@+id/llCurrentLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/xxlarge_margin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
 
-            <View
-                android:id="@+id/vDivider"
-                android:layout_width="1dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="@dimen/small_margin"
-                android:background="@color/lightBackground"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                    <ImageView
+                        android:id="@+id/imgLocation"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_location_light"
+                        android:layout_gravity="center"/>
 
-            <ImageView
-                android:id="@+id/imgSun"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="@dimen/small_margin"
-                android:src="@drawable/ic_sun"
-                app:layout_constraintLeft_toRightOf="@+id/vDivider"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                    <TextView
+                        style="@style/MediumLightTextView"
+                        android:text="Location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"/>
 
-            <TextView
-                style="@style/SmallLightTextView"
-                android:text="UV index Low"
-                android:layout_marginHorizontal="@dimen/xsmall_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/imgSun"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tvDateTime"
+                    style="@style/MediumLightTextView"
+                    android:text="Wed 9 Jan 2021 10:00 Am"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@+id/llCurrentLocation"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
 
+                <LinearLayout
+                    android:id="@+id/llCurrentTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDateTime"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
 
+                    <ImageView
+                        android:id="@+id/imgClouds"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_cloud_light"
+                        android:layout_gravity="center"/>
 
-
-
+                    <TextView
+                        style="@style/XLargeLightTextView"
+                        android:text="29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
 
 
+                    <TextView
+                        style="@style/MediumLightTextView"
+                        android:text="o"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="top"/>
 
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvMessage"
+                    style="@style/MediumLightTextView"
+                    android:text="30 / 26 Feels like 30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@+id/llCurrentTemp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvBreakDown"
+                    style="@style/MediumLightTextView"
+                    android:text="Cloudy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@+id/tvMessage"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvMoreInfo"
+                    style="@style/MediumLightTextView"
+                    android:text="More details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/xlarge_margin"
+                    android:layout_marginHorizontal="@dimen/large_margin"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBreakDown"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintHorizontal_bias="1"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/DetailsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginHorizontal="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@+id/tvMoreInfo"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imgPrecip"
+                        android:layout_width="25dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_pricip_light"
+                        android:layout_marginHorizontal="@dimen/xsmall_margin"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/tvPrecip"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tvPrecip"
+                        style="@style/SmallLightTextView"
+                        android:text="Precipitation"
+                        android:layout_marginRight="@dimen/small_margin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toLeftOf="@+id/vDivider"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <View
+                        android:id="@+id/vDivider"
+                        android:layout_width="1dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="@dimen/small_margin"
+                        android:background="@color/lightBackground"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgSun"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="@dimen/small_margin"
+                        android:src="@drawable/ic_sun"
+                        app:layout_constraintLeft_toRightOf="@+id/vDivider"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        style="@style/SmallLightTextView"
+                        android:text="UV index Low"
+                        android:layout_marginHorizontal="@dimen/xsmall_margin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/imgSun"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
         <com.wang.avi.AVLoadingIndicatorView
             android:visibility="gone"
@@ -207,11 +210,8 @@
             android:layout_height="wrap_content"
             app:indicatorName="BallPulseIndicator"
             app:indicatorColor="@color/lightText"
-            android:layout_marginTop="@dimen/large_margin"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:layout_gravity="center"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </layout>

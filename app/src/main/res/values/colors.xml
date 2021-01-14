@@ -12,7 +12,7 @@
     <color name="splashBackground">#000</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="transWhiteColor">#54feffff</color>
+    <color name="transWhiteColor">#45ffffff</color>
     <color name="splashGradientStart">#1a8ff5</color>
     <color name="splashGradientEnd">#1acafd</color>
 </resources>

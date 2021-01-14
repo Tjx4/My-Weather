@@ -13,6 +13,18 @@
         android:layout_height="wrap_content"
         tools:context=".features.weather.WeatherActivity">
 
+        <com.wang.avi.AVLoadingIndicatorView
+            android:visibility="visible"
+            android:id="@+id/avlHeroLoader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorName="BallPulseIndicator"
+            app:indicatorColor="@color/black"
+            android:layout_marginTop="@dimen/large_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

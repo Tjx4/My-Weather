@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWeather">
-        <activity android:name="com.globalkinetic.myweather.features.weather.WeatherActivity"></activity>
+        <activity
+            android:name="com.globalkinetic.myweather.features.weather.WeatherActivity"
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name="com.globalkinetic.myweather.features.splash.SplashActivity"
             android:theme="@style/SplashTheme">

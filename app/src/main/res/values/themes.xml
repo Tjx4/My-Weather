@@ -10,10 +10,45 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/purple_700</item>
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/lightBackground</item>
     </style>
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:background">@drawable/splash_background</item>
+    </style>
+    <style name="BaseTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="xlargeTextView" parent="BaseTextView">
+        <item name="android:textSize">@dimen/xlarge_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="largeTextView" parent="BaseTextView">
+        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="LargeLightTextView" parent="largeTextView">
+        <item name="android:textColor">@color/lightText</item>
+    </style>
+    <style name="MediumTextView" parent="BaseTextView">
+        <item name="android:textSize">@dimen/medium_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="MediumLightTextView" parent="MediumTextView">
+        <item name="android:textColor">@color/lightText</item>
+    </style>
+    <style name="smallTextView" parent="BaseTextView">
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="SmallLightTextView" parent="smallTextView">
+        <item name="android:textColor">@color/lightText</item>
     </style>
 </resources>

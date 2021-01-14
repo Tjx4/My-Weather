@@ -14,6 +14,7 @@ class SplashActivity : AppCompatActivity() {
             null,
             FADE_IN_ACTIVITY
         )
+        finish()
     }
 }
 

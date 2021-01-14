@@ -5,7 +5,7 @@
     <dimen name="xsmall_text">9sp</dimen>
     <dimen name="medium_plus_text">21sp</dimen>
     <dimen name="large_text">30sp</dimen>
-    <dimen name="xlarge_text">70sp</dimen>
+    <dimen name="xlarge_text">80sp</dimen>
     <dimen name="xxsmall_margin">5dp</dimen>
     <dimen name="xsmall_margin">10dp</dimen>
     <dimen name="small_margin">15dp</dimen>

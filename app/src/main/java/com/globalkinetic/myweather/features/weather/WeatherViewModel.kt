@@ -28,8 +28,12 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val currentLocation: MutableLiveData<UserLocation>
         get() = _currentLocation
 
+    private val _description: MutableLiveData<String> = MutableLiveData()
+    val description: MutableLiveData<String>
+        get() = _description
+
     init {
-        val latLng = LatLng(-25.7523497,28.2083034)
+        val latLng = LatLng(-25.7523497, 28.2083034)
         val userLocation = UserLocation("SunnySide", "Decription of this place", latLng, "Wed 11 Jan 13:00 PM")
         checkAndSetLocation(userLocation)
     }
@@ -53,6 +57,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
 
             uiScope.launch {
                 _weather.value = weather
+                _description.value = weather?.current?.weather?.get(0)?.description ?: ""
             }
         }
 

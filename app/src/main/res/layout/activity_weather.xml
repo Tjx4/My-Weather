@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/clContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -81,7 +81,8 @@
 
                     <TextView
                         style="@style/XLargeLightTextView"
-                        android:text="29"
+                        tools:text="29"
+                        android:text="@{weatherViewModel.weather.current.temp.toString()}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"/>
@@ -101,7 +102,8 @@
                 <TextView
                     android:id="@+id/tvMessage"
                     style="@style/MediumLightTextView"
-                    android:text="30 / 26 Feels like 30"
+                    tools:text="30 / 26 Feels like 30"
+                    android:text="@{weatherViewModel.weather.current.temp}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
@@ -218,7 +220,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/DetailsContainer"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/xsmall_margin"
                 android:layout_marginBottom="@dimen/medium_margin"
                 android:layout_marginHorizontal="@dimen/small_margin"
@@ -227,6 +229,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHourly"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -234,7 +245,7 @@
         </ScrollView>
 
         <com.wang.avi.AVLoadingIndicatorView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/avlHeroLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

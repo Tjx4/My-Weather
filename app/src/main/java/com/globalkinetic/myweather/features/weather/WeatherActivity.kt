@@ -5,7 +5,9 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.globalkinetic.myweather.R
+import com.globalkinetic.myweather.adapters.HourlyAdapter
 import com.globalkinetic.myweather.base.activities.BaseActivity
 import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
 import com.globalkinetic.myweather.models.UserLocation
@@ -51,6 +53,18 @@ class WeatherActivity : BaseActivity() {
     private fun onWeatherSet(weather: Weather) {
         avlHeroLoader.visibility = View.GONE
         clContent.visibility = View.VISIBLE
+
+        val searchTypeLayoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
+        searchTypeLayoutManager.initialPrefetchItemCount =  weather.hourly?.size ?: 0
+        rvHourly?.layoutManager = searchTypeLayoutManager
+        var hourlyAdapter = HourlyAdapter(this, weather.hourly)
+        hourlyAdapter.setHourlyClickListener(this)
+        rvHourly?.adapter = hourlyAdapter
     }
 
 }

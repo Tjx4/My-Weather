@@ -10,7 +10,7 @@ class WeatherRepository(var retrofitHelper: RetrofitHelper) {
         return try {
             retrofitHelper.getMyLocationWeather(apiKey, latLng?.latitude, latLng?.longitude)
         } catch (ex: Exception){
-            Weather("", null)
+            Weather("", null, null)
         }
     }
 

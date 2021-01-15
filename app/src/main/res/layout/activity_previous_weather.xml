@@ -10,9 +10,25 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@drawable/splash_background_gradient"
         tools:context=".features.previous.PreviousWeatherActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/Theme.MyWeather"
+            app:layout_collapseMode="pin"
+            app:titleTextColor="@color/lightText"
+            app:elevation="0dp"
+            app:navigationIcon="@drawable/ic_action_back_light"
+            app:title="Previous weather reports"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

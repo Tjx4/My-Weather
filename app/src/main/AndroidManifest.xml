@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWeather">
-        <activity android:name=".features.previous.PreviousWeatherActivity"></activity>
+        <activity
+            android:name=".features.previous.PreviousWeatherActivity"
+            android:theme="@style/NoActionBarTheme"></activity>
         <activity
             android:name=".features.weather.WeatherActivity"
             android:theme="@style/NoActionBarTheme"

@@ -15,284 +15,341 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@drawable/splash_background_gradient"
         tools:context=".features.weather.WeatherActivity">
 
-        <ScrollView
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:visibility="invisible"
+            android:id="@+id/clBody"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:fitsSystemWindows="true"
+            tools:context=".features.hosts.view.ViewHostActivity">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:visibility="visible"
-                android:id="@+id/clContent"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:background="@android:color/transparent"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:elevation="0dp"
+                android:fitsSystemWindows="true">
 
-                <LinearLayout
-                    android:id="@+id/llCurrentLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/xxlarge_margin"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent">
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:contentScrim="@android:color/transparent"
+                    app:expandedTitleMarginStart="20dp"
+                    app:expandedTitleMarginEnd="64dp"
+                    app:expandedTitleMarginBottom="20dp"
+                    app:title=" "
+                    android:fitsSystemWindows="true"
+                    app:elevation="0dp">
 
-                    <ImageView
-                        android:id="@+id/imgLocation"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_location_light"
-                        android:layout_gravity="center"/>
-
-                    <TextView
-                        style="@style/MediumLightTextView"
-                        tools:text="Location"
-                        android:text="@{StringExtension.nullToDefValue(weatherViewModel.currentLocation.name , `Unknown`)}"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clHeaderContent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"/>
+                        app:layout_collapseMode="parallax" >
 
-                </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/llCurrentLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/xxlarge_margin"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
 
-                <TextView
-                    android:id="@+id/tvDateTime"
-                    style="@style/MediumLightTextView"
-                    tools:text="Wed 9 Jan 2021 10:00 Am"
-                    android:text="@{StringExtension.nullToDefValue(weatherViewModel.currentDateTime , `Unknown`)}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintTop_toBottomOf="@+id/llCurrentLocation"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                            <ImageView
+                                android:id="@+id/imgLocation"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_location_light"
+                                android:layout_gravity="center"/>
 
-                <LinearLayout
-                    android:id="@+id/llCurrentTemp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDateTime"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent">
+                            <TextView
+                                style="@style/MediumLightTextView"
+                                tools:text="Location"
+                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.currentLocation.name , `Unknown`)}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:layout_gravity="center"/>
 
-                    <ImageView
-                        android:id="@+id/imgClouds"
-                        android:layout_width="80dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_cloud_light"
-                        android:layout_gravity="center"/>
+                        </LinearLayout>
 
-                    <TextView
-                        style="@style/XLargeLightTextView"
-                        tools:text="29"
-                        android:text="@{StringExtension.nullToDefValue(weatherViewModel.temprature.toString(), `0`)}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        <TextView
+                            android:id="@+id/tvDateTime"
+                            style="@style/MediumLightTextView"
+                            tools:text="Wed 9 Jan 2021 10:00 Am"
+                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.currentDateTime , `Unknown`)}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small_margin"
+                            app:layout_constraintTop_toBottomOf="@+id/llCurrentLocation"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"/>
 
-                    <TextView
-                        style="@style/MediumLightTextView"
-                        android:text="o"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:textStyle="bold"
-                        android:layout_gravity="top"/>
+                        <LinearLayout
+                            android:id="@+id/llCurrentTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/small_margin"
+                            app:layout_constraintTop_toBottomOf="@+id/tvDateTime"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
 
-                </LinearLayout>
+                            <ImageView
+                                android:id="@+id/imgClouds"
+                                android:layout_width="80dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_cloud_light"
+                                android:layout_gravity="center"/>
 
-                <TextView
-                    android:id="@+id/tvMessage"
-                    style="@style/MediumLightTextView"
-                    tools:text="30 / 26 Feels like 30"
-                    android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.wind_speed.toString(), `0`) + ` / ` + StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString(), `0`) + ` Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintTop_toBottomOf="@+id/llCurrentTemp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                            <TextView
+                                style="@style/XLargeLightTextView"
+                                tools:text="29"
+                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.temprature.toString(), `0`)}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"/>
 
-                <TextView
-                    android:id="@+id/tvBreakDown"
-                    style="@style/MediumLightTextView"
-                    tools:text="Cloudy"
-                    android:text="@{StringExtension.nullToDefValue( weatherViewModel.description, `Unknown`)}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMessage"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                            <TextView
+                                style="@style/MediumLightTextView"
+                                android:text="o"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="18dp"
+                                android:textStyle="bold"
+                                android:layout_gravity="top"/>
 
+                        </LinearLayout>
 
+                        <TextView
+                            android:id="@+id/tvMessage"
+                            style="@style/MediumLightTextView"
+                            tools:text="30 / 26 Feels like 30"
+                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.wind_speed.toString(), `0`) + ` / ` + StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString(), `0`) + ` Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small_margin"
+                            app:layout_constraintTop_toBottomOf="@+id/llCurrentTemp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"/>
 
+                        <TextView
+                            android:id="@+id/tvBreakDown"
+                            style="@style/MediumLightTextView"
+                            tools:text="Cloudy"
+                            android:text="@{StringExtension.nullToDefValue( weatherViewModel.description, `Unknown`)}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/small_margin"
+                            app:layout_constraintTop_toBottomOf="@+id/tvMessage"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"/>
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/tvMoreInfo"
-                    style="@style/MediumLightTextView"
-                    android:text="More details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/xlarge_margin"
-                    android:layout_marginHorizontal="@dimen/large_margin"
-                    app:layout_constraintTop_toBottomOf="@+id/tvBreakDown"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintHorizontal_bias="1"/>
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                        app:popupTheme="@style/Theme.MyWeather"
+                        app:layout_collapseMode="pin"
+                        app:titleTextColor="@color/lightText"
+                        app:elevation="0dp"
+                        app:title=" "/>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:background="@android:color/transparent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clPripAndUv"
-                    style="@style/DetailsContainer"
+                    android:visibility="visible"
+                    android:id="@+id/clContent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginHorizontal="@dimen/small_margin"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMoreInfo"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent">
-
-                    <ImageView
-                        android:id="@+id/imgPrecip"
-                        android:layout_width="25dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_pricip_light"
-                        android:layout_marginHorizontal="@dimen/xsmall_margin"
-                        app:layout_constraintHorizontal_bias="1"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/tvPrecip"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                    android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/tvPrecip"
+                        android:id="@+id/tvMoreInfo"
                         style="@style/MediumLightTextView"
-                        android:text="Precipitation"
-                        android:layout_marginRight="@dimen/small_margin"
+                        android:text="More details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintRight_toLeftOf="@+id/vDivider"
+                        android:layout_marginTop="@dimen/xlarge_margin"
+                        android:layout_marginHorizontal="@dimen/large_margin"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    <TextView
-                        style="@style/MediumLightTextView"
-                        tools:text="10%"
-                        android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString() + `%`, `0%`)}"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/small_margin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/tvPrecip"
-                        app:layout_constraintLeft_toLeftOf="@+id/tvPrecip"/>
-
-                    <View
-                        android:id="@+id/vDivider"
-                        android:layout_width="1dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="@dimen/small_margin"
-                        android:background="@color/lightBackground"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintHorizontal_bias="1"/>
 
-                    <ImageView
-                        android:id="@+id/imgSun"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="@dimen/small_margin"
-                        android:src="@drawable/ic_sun"
-                        app:layout_constraintLeft_toRightOf="@+id/vDivider"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clPripAndUv"
+                        style="@style/DetailsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginHorizontal="@dimen/small_margin"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMoreInfo"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imgPrecip"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_pricip_light"
+                            android:layout_marginHorizontal="@dimen/xsmall_margin"
+                            app:layout_constraintHorizontal_bias="1"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@+id/tvPrecip"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tvPrecip"
+                            style="@style/MediumLightTextView"
+                            android:text="Precipitation"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintRight_toLeftOf="@+id/vDivider"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            style="@style/MediumLightTextView"
+                            tools:text="10%"
+                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString() + `%`, `0%`)}"
+                            android:textStyle="bold"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPrecip"
+                            app:layout_constraintLeft_toLeftOf="@+id/tvPrecip"/>
+
+                        <View
+                            android:id="@+id/vDivider"
+                            android:layout_width="1dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:background="@color/lightBackground"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <ImageView
+                            android:id="@+id/imgSun"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:src="@drawable/ic_sun"
+                            app:layout_constraintLeft_toRightOf="@+id/vDivider"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tvUv"
+                            style="@style/MediumLightTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/xsmall_margin"
+                            android:text="@string/uv_index"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintLeft_toRightOf="@+id/imgSun"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            style="@style/MediumLightTextView"
+                            tools:text="0"
+                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.uvi.toString(), `0`)}"
+                            android:textStyle="bold"
+                            android:layout_marginRight="@dimen/small_margin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/tvUv"
+                            app:layout_constraintLeft_toLeftOf="@+id/tvUv"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/tvUv"
+                        android:id="@+id/tvHourly"
                         style="@style/MediumLightTextView"
+                        android:text="Hourly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/xsmall_margin"
-                        android:text="@string/uv_index"
+                        android:layout_marginTop="@dimen/xsmall_margin"
+                        android:layout_marginHorizontal="@dimen/large_margin"
+                        app:layout_constraintTop_toBottomOf="@+id/clPripAndUv"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintHorizontal_bias="0"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        style="@style/DetailsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/xsmall_margin"
+                        android:layout_marginBottom="@dimen/medium_margin"
+                        android:layout_marginHorizontal="@dimen/small_margin"
+                        app:layout_constraintVertical_bias="0"
+                        app:layout_constraintTop_toBottomOf="@+id/tvHourly"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintLeft_toRightOf="@+id/imgSun"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:visibility="gone"
+                            android:id="@+id/rvHourly"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"/>
 
-                    <TextView
-                        style="@style/MediumLightTextView"
-                        tools:text="0"
-                        android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.uvi.toString(), `0`)}"
-                        android:textStyle="bold"
-                        android:layout_marginRight="@dimen/small_margin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/tvUv"
-                        app:layout_constraintLeft_toLeftOf="@+id/tvUv"/>
+                        <TextView
+                            android:id="@+id/tvNohourly"
+                            style="@style/MediumLightTextView"
+                            android:text="No hourly data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/medium_margin"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvHourly"
-                style="@style/MediumLightTextView"
-                android:text="Hourly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/xsmall_margin"
-                android:layout_marginHorizontal="@dimen/large_margin"
-                app:layout_constraintTop_toBottomOf="@+id/clPripAndUv"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0"/>
+            </androidx.core.widget.NestedScrollView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/DetailsContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/xsmall_margin"
-                android:layout_marginBottom="@dimen/medium_margin"
-                android:layout_marginHorizontal="@dimen/small_margin"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@+id/tvHourly"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:visibility="gone"
-                    android:id="@+id/rvHourly"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tvNohourly"
-                    style="@style/MediumLightTextView"
-                    android:text="No hourly data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/medium_margin"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <LinearLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/llLoaderContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -315,7 +372,6 @@
                 android:layout_marginTop="@dimen/xsmall_margin"
                 android:layout_gravity="center"/>
         </LinearLayout>
-
 
     </FrameLayout>
 

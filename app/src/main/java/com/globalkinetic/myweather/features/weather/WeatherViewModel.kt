@@ -85,8 +85,9 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                 if(weather != null){
                     _weather.value = weather
                     _temprature.value = fahrenheitToCelsius(weather?.current?.temp ?: 0.0)
+                    _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
+
                     _description.value = weather?.current?.weather?.get(0)?.description ?: ""
-                    _currentDateTime.value =  getFormatedDate(weather?.current?.dt ?: 0)
 
                     weather?.hourly?.let {
                         if(it.isNotEmpty()){

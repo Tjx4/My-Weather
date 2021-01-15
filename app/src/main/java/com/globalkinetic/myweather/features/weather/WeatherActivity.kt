@@ -59,8 +59,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     fun initLocation() {
         locationRequest = LocationRequest()
-        locationRequest!!.interval = 2000
-        locationRequest!!.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        locationRequest?.interval = 2000
+        locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
         val locationCallback: LocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
@@ -77,6 +77,11 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
             if (location != null) {
                 onRequestListenerSuccess(location)
                 fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+            }
+            else{
+                showErrorAlert(this, "Location Error", "Error retrieving location", getString(R.string.close)) {
+
+                }
             }
         }
 

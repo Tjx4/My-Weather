@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.globalkinetic.myweather.R
 import com.globalkinetic.myweather.base.activities.BaseChildActivity
 import com.globalkinetic.myweather.databinding.ActivityPreviousWeatherBinding
+import kotlinx.android.synthetic.main.activity_previous_weather.*
 
-class PreviousPreviousWeatherActivity : BaseChildActivity() {
+class PreviousWeatherActivity : BaseChildActivity() {
     private lateinit var binding: ActivityPreviousWeatherBinding
     private lateinit var previousWeatherViewModel: PreviousWeatherViewModel
 
@@ -25,5 +26,8 @@ class PreviousPreviousWeatherActivity : BaseChildActivity() {
         binding.lifecycleOwner = this
 
         //addObservers()
+
+        toolbar?.setNavigationOnClickListener { onBackPressed() }
+        setSupportActionBar(toolbar)
     }
 }

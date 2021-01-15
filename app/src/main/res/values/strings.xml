@@ -2,9 +2,17 @@
     <string name="app_name">My Weather</string>
     <string name="uv_index">UV index</string>
     <string name="google_play_error">Google play error</string>
+    <string name="google_play_error_message">You do not have google play on your device and therefore cannot use this app</string>
     <string name="no_play_services">Please ensure that Google play services are active on your phone</string>
     <string name="ok">Ok</string>
     <string name="close">Close</string>
     <string name="error">Error</string>
     <string name="permission_denied">To use this app u need %1$s Please go to settings and enable it</string>
+    <string name="unknown_location">Unknown Location</string>
+    <string name="location_error">Location Error</string>
+    <string name="unable_to_get_location">We were unable to get your current location</string>
+    <string name="location_retrieve_error">Error retrieving location</string>
+    <string name="try_again">Try again</string>
+    <string name="gps_error_message">Please enable your GPS and try again</string>
+    <string name="gps_error_title">GPS Error</string>
 </resources>

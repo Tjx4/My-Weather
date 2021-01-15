@@ -1,10 +1,12 @@
 package com.globalkinetic.myweather.features.weather
 
 import android.app.Application
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.converter.fahrenheitToCelsius
+import com.globalkinetic.myweather.helpers.getAreaName
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
@@ -46,14 +48,19 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val currentDateTime: MutableLiveData<String>
         get() = _currentDateTime
 
-    fun checkAndSetLocation(location: UserLocation?){
-        _showLoading.value = true
-
+    fun checkAndSetLocation(location: Location?){
         if(location == null){
             _isNoLocation.value = true
             return
         }
-        _currentLocation.value = location
+
+        _showLoading.value = true
+
+        val userCoordinates = LatLng(location?.latitude, location?.longitude)
+        val locationName = getAreaName(LatLng(location.latitude, location.longitude), app)
+        val userLocation = UserLocation(locationName, "", userCoordinates, "")
+
+        _currentLocation.value = userLocation
     }
 
     fun getAndSetWeather(location: UserLocation){

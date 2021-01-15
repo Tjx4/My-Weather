@@ -9,6 +9,7 @@
     <string name="error">Error</string>
     <string name="permission_denied">To use this app u need %1$s Please go to settings and enable it</string>
     <string name="unknown_location">Unknown Location</string>
+    <string name="weather_error">There was an error while fetching weather, please try again</string>
     <string name="location_error">Location Error</string>
     <string name="unable_to_get_location">We were unable to get your current location</string>
     <string name="location_retrieve_error">Error retrieving location</string>

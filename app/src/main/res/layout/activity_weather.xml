@@ -274,14 +274,31 @@
 
         </ScrollView>
 
-        <com.wang.avi.AVLoadingIndicatorView
+        <LinearLayout
             android:visibility="gone"
-            android:id="@+id/avlHeroLoader"
+            android:id="@+id/llLoaderContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:indicatorName="BallPulseIndicator"
-            app:indicatorColor="@color/lightText"
-            android:layout_gravity="center"/>
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/avlHeroLoader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorName="BallScaleMultipleIndicator"
+                app:indicatorColor="@color/lightText"
+                android:layout_gravity="center"/>
+
+            <TextView
+                style="@style/MediumLightTextView"
+                android:text="Loading weather, please wait..."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/xsmall_margin"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
 
     </FrameLayout>
 

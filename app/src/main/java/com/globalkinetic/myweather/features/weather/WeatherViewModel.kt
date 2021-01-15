@@ -3,6 +3,7 @@ package com.globalkinetic.myweather.features.weather
 import android.app.Application
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
+import com.globalkinetic.myweather.R
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.converter.fahrenheitToCelsius
@@ -12,6 +13,7 @@ import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.activity_weather.view.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,16 +26,20 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val showLoading: MutableLiveData<Boolean>
         get() = _showLoading
 
-    private val _isNoLocation: MutableLiveData<Boolean> = MutableLiveData()
-    val isNoLocation: MutableLiveData<Boolean>
-        get() = _isNoLocation
+    private val _isLocationError: MutableLiveData<Boolean> = MutableLiveData()
+    val isLocationError: MutableLiveData<Boolean>
+        get() = _isLocationError
+
+    private val _isWeatherError: MutableLiveData<Boolean> = MutableLiveData()
+    val isWeatherError: MutableLiveData<Boolean>
+        get() = _isWeatherError
 
     private var _temprature: MutableLiveData<Int> = MutableLiveData()
     val temprature: MutableLiveData<Int>
         get() = _temprature
 
-    private var _weather: MutableLiveData<Weather> = MutableLiveData()
-    val weather: MutableLiveData<Weather>
+    private var _weather: MutableLiveData<Weather?> = MutableLiveData()
+    val weather: MutableLiveData<Weather?>
         get() = _weather
 
     private val _currentLocation: MutableLiveData<UserLocation> = MutableLiveData()
@@ -50,7 +56,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
 
     fun checkAndSetLocation(location: Location?){
         if(location == null){
-            _isNoLocation.value = true
+            _isLocationError.value = true
             return
         }
 
@@ -68,13 +74,18 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
         var currentCoordinates = _currentLocation.value?.coordinates ?: LatLng(0.0, 0.0)
 
         ioScope.launch {
-            val weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
+            var weather: Weather? = weatherRepository.getWeather(API_KEY, currentCoordinates)
 
             uiScope.launch {
-                _weather.value = weather
-                _temprature.value = fahrenheitToCelsius(weather?.current?.temp ?: 0.0)
-                _description.value = weather?.current?.weather?.get(0)?.description ?: ""
-                _currentDateTime.value =  getFormatedDate(weather?.current?.dt ?: 0)
+                if(weather != null){
+                    _weather.value = weather
+                    _temprature.value = fahrenheitToCelsius(weather?.current?.temp ?: 0.0)
+                    _description.value = weather?.current?.weather?.get(0)?.description ?: ""
+                    _currentDateTime.value =  getFormatedDate(weather?.current?.dt ?: 0)
+                }
+                else{
+                    _isWeatherError.value = true
+                }
             }
         }
 

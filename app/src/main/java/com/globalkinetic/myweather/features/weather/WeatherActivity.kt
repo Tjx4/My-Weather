@@ -55,6 +55,19 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         checkGoogleApi()
     }
 
+    fun isGPSOn(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val lm = this.getSystemService(LOCATION_SERVICE) as LocationManager
+            lm.isLocationEnabled
+        } else {
+            val mode = Settings.Secure.getInt(
+                    this.contentResolver, Settings.Secure.LOCATION_MODE,
+                    Settings.Secure.LOCATION_MODE_OFF
+            )
+            mode != Settings.Secure.LOCATION_MODE_OFF
+        }
+    }
+
     fun checkGoogleApi() {
         val api = GoogleApiAvailability.getInstance()
         val isAv = api.isGooglePlayServicesAvailable(this)
@@ -144,19 +157,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     }
 
-     fun isGPSOn(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val lm = this.getSystemService(LOCATION_SERVICE) as LocationManager
-            lm.isLocationEnabled
-        } else {
-            val mode = Settings.Secure.getInt(
-                    this.contentResolver, Settings.Secure.LOCATION_MODE,
-                    Settings.Secure.LOCATION_MODE_OFF
-            )
-            mode != Settings.Secure.LOCATION_MODE_OFF
-        }
-    }
-
     override fun onRequestPermissionsResult(
             requestCode: Int,
             permissions: Array<String>,
@@ -187,6 +187,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     private fun addObservers() {
         weatherViewModel.currentLocation.observe(this, Observer { onCurrentLocationSet(it) })
+        weatherViewModel.isLocationError.observe(this, Observer { onLocationError(it) })
+        weatherViewModel.isWeatherError.observe(this, Observer { onWeatherError(it) })
         weatherViewModel.showLoading.observe(this, Observer { onShowLoading(it) })
         weatherViewModel.weather.observe(this, Observer { onWeatherSet(it) })
     }
@@ -196,15 +198,27 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun onShowLoading(isBusy: Boolean) {
-        avlHeroLoader.visibility = View.VISIBLE
+        llLoaderContainer.visibility = View.VISIBLE
         clContent.visibility = View.INVISIBLE
     }
 
-    private fun onWeatherSet(weather: Weather) {
-        avlHeroLoader.visibility = View.GONE
+    private fun onLocationError(isLocationError: Boolean) {
+        showErrorAlert(this, getString(R.string.error), getString(R.string.location_error), getString(R.string.try_again)) {
+            finish()
+        }
+    }
+
+    private fun onWeatherError(isWeatherError: Boolean) {
+        showErrorAlert(this, getString(R.string.error), getString(R.string.weather_error), getString(R.string.try_again)) {
+            weatherViewModel.currentLocation.value?.let { weatherViewModel.getAndSetWeather(it) }
+        }
+    }
+
+    private fun onWeatherSet(weather: Weather?) {
+        llLoaderContainer.visibility = View.GONE
         clContent.visibility = View.VISIBLE
 
-        showHourlyWeather(weather.hourly)
+        showHourlyWeather(weather?.hourly)
     }
 
     private fun showHourlyWeather(hourly: List<Current>?) {

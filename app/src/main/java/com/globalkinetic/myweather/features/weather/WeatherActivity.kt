@@ -106,9 +106,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
         val locationCallback: LocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                if (locationResult == null) {
-                    return
-                }
+                if (locationResult == null) { return }
+
                 for (location in locationResult.locations) {
                     if (location != null) {
                         onLocationChanged(location)
@@ -116,6 +115,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
                 }
             }
         }
+
+        getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
 
         val fusedLocationClient = getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -126,25 +127,21 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
                 return@addOnSuccessListener
             }
 
-            onRequestListenerSuccess(location)
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
-
+            onLocationRequestListenerSuccess(location)
         }
         fusedLocationClient.lastLocation.addOnFailureListener {
             showErrorAlert(this, getString(R.string.location_error), getString(R.string.location_retrieve_error), getString(R.string.close)) {
                 finish()
             }
         }
-
-
     }
 
-    fun onRequestListenerSuccess(location: Location?) {
+    fun onLocationRequestListenerSuccess(location: Location?) {
         weatherViewModel.checkAndSetLocation(location)
     }
 
     override fun onLocationChanged(location: Location?) {
-        val dfdf = location
+
     }
 
      fun isGPSOn(): Boolean {

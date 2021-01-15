@@ -216,7 +216,9 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     fun onLocationPermissionDenied() {
-        clBody.visibility = View.INVISIBLE
+        clContent.visibility = View.VISIBLE
+        app_bar_layout.visibility = View.VISIBLE
+
         showErrorAlert(
             this,
             getString(R.string.error),
@@ -242,7 +244,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     private fun onShowLoading(isBusy: Boolean) {
         llLoaderContainer.visibility = View.VISIBLE
-        clBody.visibility = View.INVISIBLE
+        clContent.visibility = View.INVISIBLE
+        app_bar_layout.visibility = View.INVISIBLE
     }
 
     private fun onLocationError(isLocationError: Boolean) {
@@ -269,7 +272,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     private fun onWeatherSet(weather: Weather?) {
         llLoaderContainer.visibility = View.GONE
-        clBody.visibility = View.VISIBLE
+        clContent.visibility = View.VISIBLE
+        app_bar_layout.visibility = View.VISIBLE
     }
 
     private fun showHourlyWeather(hourly: List<Current>?) {

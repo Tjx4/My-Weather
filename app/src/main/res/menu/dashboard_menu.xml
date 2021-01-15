@@ -5,13 +5,13 @@
     <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_save_weather_light"
-        android:title="Add report"
+        android:title="@string/add_report"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_view_reports"
         android:icon="@drawable/ic_reports_light"
-        android:title="View previous reports"
+        android:title="@string/previous_weather_reports"
         app:showAsAction="never"/>
 
 </menu>

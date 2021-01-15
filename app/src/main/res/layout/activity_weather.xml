@@ -12,23 +12,17 @@
             type="com.globalkinetic.myweather.features.weather.WeatherViewModel"/>
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/splash_background_gradient"
-        tools:context=".features.weather.WeatherActivity">
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:visibility="invisible"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/clBody"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
             android:fitsSystemWindows="true"
-            tools:context=".features.hosts.view.ViewHostActivity">
+            android:animateLayoutChanges="true"
+            android:background="@drawable/splash_background_gradient"
+            tools:context=".features.weather.WeatherActivity">
 
             <com.google.android.material.appbar.AppBarLayout
+                android:visibility="invisible"
                 android:id="@+id/app_bar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,8 +35,8 @@
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                     app:contentScrim="@android:color/transparent"
                     app:expandedTitleMarginStart="20dp"
                     app:expandedTitleMarginEnd="64dp"
@@ -182,7 +176,7 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:visibility="visible"
+                    android:visibility="invisible"
                     android:id="@+id/clContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -346,9 +340,7 @@
 
             </androidx.core.widget.NestedScrollView>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <LinearLayout
+            <LinearLayout
             android:visibility="visible"
             android:id="@+id/llLoaderContainer"
             android:layout_width="wrap_content"
@@ -373,6 +365,6 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
 
-    </FrameLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

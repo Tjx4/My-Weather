@@ -16,4 +16,7 @@
     <string name="try_again">Try again</string>
     <string name="gps_error_message">Please enable your GPS and try again</string>
     <string name="gps_error_title">GPS Error</string>
+    <string name="add_report">Add report</string>
+    <string name="previous_weather_reports">Previous weather reports</string>
+    <string name="weather_reports">Weather reports</string>
 </resources>

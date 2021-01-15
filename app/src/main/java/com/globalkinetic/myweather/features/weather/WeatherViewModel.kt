@@ -9,6 +9,7 @@ import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.converter.fahrenheitToCelsius
 import com.globalkinetic.myweather.helpers.getAreaName
 import com.globalkinetic.myweather.helpers.getFormatedDate
+import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
@@ -41,6 +42,10 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     private var _weather: MutableLiveData<Weather?> = MutableLiveData()
     val weather: MutableLiveData<Weather?>
         get() = _weather
+
+    private var _hourly: MutableLiveData<List<Current>?> = MutableLiveData()
+    val hourly: MutableLiveData<List<Current>?>
+        get() = _hourly
 
     private val _currentLocation: MutableLiveData<UserLocation> = MutableLiveData()
     val currentLocation: MutableLiveData<UserLocation>
@@ -82,6 +87,13 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                     _temprature.value = fahrenheitToCelsius(weather?.current?.temp ?: 0.0)
                     _description.value = weather?.current?.weather?.get(0)?.description ?: ""
                     _currentDateTime.value =  getFormatedDate(weather?.current?.dt ?: 0)
+
+                    weather?.hourly?.let {
+                        if(it.isNotEmpty()){
+                            _hourly.value = it
+                        }
+                    }
+
                 }
                 else{
                     _isWeatherError.value = true

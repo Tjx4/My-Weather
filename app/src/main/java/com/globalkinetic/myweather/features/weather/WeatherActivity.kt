@@ -191,6 +191,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         weatherViewModel.isWeatherError.observe(this, Observer { onWeatherError(it) })
         weatherViewModel.showLoading.observe(this, Observer { onShowLoading(it) })
         weatherViewModel.weather.observe(this, Observer { onWeatherSet(it) })
+        weatherViewModel.hourly.observe(this, Observer { showHourlyWeather(it) })
     }
 
     private fun onCurrentLocationSet(location: UserLocation) {
@@ -217,8 +218,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     private fun onWeatherSet(weather: Weather?) {
         llLoaderContainer.visibility = View.GONE
         clContent.visibility = View.VISIBLE
-
-        showHourlyWeather(weather?.hourly)
     }
 
     private fun showHourlyWeather(hourly: List<Current>?) {
@@ -231,6 +230,9 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         rvHourly?.adapter = hourlyAdapter
         val snapHelper: SnapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(rvHourly)
+
+        rvHourly.visibility = View.VISIBLE
+        tvNohourly.visibility = View.GONE
     }
 
     override fun onHourlyClickListener(view: View, position: Int) {

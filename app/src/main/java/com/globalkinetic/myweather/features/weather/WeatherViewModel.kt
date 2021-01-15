@@ -46,17 +46,6 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val currentDateTime: MutableLiveData<String>
         get() = _currentDateTime
 
-    init {
-        val latLng = LatLng(-25.7523497, 28.2083034)
-        val userLocation = UserLocation(
-            "SunnySide",
-            "Decription of this place",
-            latLng,
-            "Wed 11 Jan 13:00 PM"
-        )
-        checkAndSetLocation(userLocation)
-    }
-
     fun checkAndSetLocation(location: UserLocation?){
         _showLoading.value = true
 

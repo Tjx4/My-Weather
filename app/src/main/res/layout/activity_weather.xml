@@ -88,11 +88,10 @@
                     <TextView
                         style="@style/XLargeLightTextView"
                         tools:text="29"
-                        android:text="@{weatherViewModel.temprature.toString()}"
+                        android:text="@{StringExtension.nullToDefValue(weatherViewModel.temprature.toString(), `0`)}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"/>
-
 
                     <TextView
                         style="@style/MediumLightTextView"
@@ -109,7 +108,7 @@
                     android:id="@+id/tvMessage"
                     style="@style/MediumLightTextView"
                     tools:text="30 / 26 Feels like 30"
-                    android:text="@{weatherViewModel.weather.current.wind_speed + ` / ` + weatherViewModel.weather.current.humidity + ` Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
+                    android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.wind_speed.toString(), `0`) + ` / ` + StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString(), `0`) + ` Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/small_margin"
@@ -225,7 +224,7 @@
                     <TextView
                         style="@style/MediumLightTextView"
                         tools:text="0"
-                        android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.uvi.toString(), `0.0`)}"
+                        android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.uvi.toString(), `0`)}"
                         android:textStyle="bold"
                         android:layout_marginRight="@dimen/small_margin"
                         android:layout_width="wrap_content"

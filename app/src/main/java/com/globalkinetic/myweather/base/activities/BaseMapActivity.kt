@@ -60,6 +60,7 @@ abstract class BaseMapActivity : BaseActivity(), OnMapReadyCallback,
     }
 
     protected fun checkLocationPermissionAndContinue() {
+
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             checkGoogleApi()
         } else {

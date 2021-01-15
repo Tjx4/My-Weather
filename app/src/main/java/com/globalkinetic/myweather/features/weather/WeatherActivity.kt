@@ -13,12 +13,12 @@ import com.globalkinetic.myweather.adapters.HourlyAdapter
 import com.globalkinetic.myweather.base.activities.BaseActivity
 import com.globalkinetic.myweather.base.activities.BaseMapActivity
 import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
-import com.globalkinetic.myweather.helpers.showErrorAlert
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
+import com.google.android.gms.location.LocationListener
 import kotlinx.android.synthetic.main.activity_weather.*
 
-class WeatherActivity : BaseMapActivity(), HourlyAdapter.HourlyClickListener {
+class WeatherActivity : BaseActivity(), HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var weatherViewModel: WeatherViewModel
 
@@ -29,13 +29,17 @@ class WeatherActivity : BaseMapActivity(), HourlyAdapter.HourlyClickListener {
         var viewModelFactory = WeatherViewModelFactory(application)
 
         weatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(
-            WeatherViewModel::class.java
+                WeatherViewModel::class.java
         )
         binding = DataBindingUtil.setContentView(this, R.layout.activity_weather)
         binding.weatherViewModel = weatherViewModel
         binding.lifecycleOwner = this
 
         addObservers()
+
+//weatherViewModel.checkAndSetLocation(userLocation)
+/*
+
 
         if(isGooglePlayServicesAvailable()){
             checkLocationPermissionAndContinue()
@@ -46,6 +50,7 @@ class WeatherActivity : BaseMapActivity(), HourlyAdapter.HourlyClickListener {
                 finish()
             }
         }
+*/
     }
 
     private fun addObservers() {
@@ -69,9 +74,9 @@ class WeatherActivity : BaseMapActivity(), HourlyAdapter.HourlyClickListener {
         clContent.visibility = View.VISIBLE
 
         val searchTypeLayoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false
         )
 
         searchTypeLayoutManager.initialPrefetchItemCount =  weather.hourly?.size ?: 0

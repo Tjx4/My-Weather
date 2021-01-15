@@ -30,7 +30,6 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_weather.*
 
-
 class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var weatherViewModel: WeatherViewModel

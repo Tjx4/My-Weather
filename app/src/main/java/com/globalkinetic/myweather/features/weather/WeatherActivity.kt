@@ -23,7 +23,6 @@ import com.globalkinetic.myweather.R
 import com.globalkinetic.myweather.adapters.HourlyAdapter
 import com.globalkinetic.myweather.base.activities.BaseActivity
 import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
-import com.globalkinetic.myweather.extensions.FADE_IN_ACTIVITY
 import com.globalkinetic.myweather.extensions.SLIDE_IN_ACTIVITY
 import com.globalkinetic.myweather.extensions.navigateToActivity
 import com.globalkinetic.myweather.features.previous.PreviousWeatherActivity
@@ -33,11 +32,9 @@ import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_weather.*
-
 
 class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding

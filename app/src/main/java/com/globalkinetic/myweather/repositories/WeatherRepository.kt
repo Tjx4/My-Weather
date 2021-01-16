@@ -23,7 +23,7 @@ class WeatherRepository(private val retrofitHelper: RetrofitHelper, private val 
             weatherDB.previousWeatherDAO.insert(weather.toWeatherTable())
             DbOperation(true)
         } catch (ex: Exception){
-            DbOperation(false)
+            DbOperation(false, "$ex")
         }
     }
 

@@ -39,6 +39,10 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val isWeatherAdded: MutableLiveData<Boolean>
         get() = _isWeatherAdded
 
+    private val _dbError: MutableLiveData<String> = MutableLiveData()
+    val dbError: MutableLiveData<String>
+        get() = _dbError
+
     private var _temprature: MutableLiveData<Int> = MutableLiveData()
     val temprature: MutableLiveData<Int>
         get() = _temprature
@@ -105,7 +109,6 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                 }
             }
         }
-
     }
 
     fun addWeatherToPreviousList() {
@@ -119,7 +122,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                             _isWeatherAdded.value = true
                         }
                         else{
-                            //Weather add error
+                            _dbError.value = addWeather.errorMessage
                         }
                     }
                 }

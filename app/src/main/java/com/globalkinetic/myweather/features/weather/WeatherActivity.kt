@@ -237,6 +237,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         weatherViewModel.weather.observe(this, Observer { onWeatherSet(it) })
         weatherViewModel.hourly.observe(this, Observer { showHourlyWeather(it) })
         weatherViewModel.isWeatherAdded.observe(this, Observer { onWeatherAddToPrevious(it) })
+        weatherViewModel.dbError.observe(this, Observer { onSqlitDbError(it) })
     }
 
     private fun onCurrentLocationSet(location: UserLocation) {
@@ -299,6 +300,10 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     fun onWeatherAddToPrevious(isAdded: Boolean) {
         Toast.makeText(this, getString(R.string.added_weather), Toast.LENGTH_SHORT).show()
+    }
+
+    fun onSqlitDbError(errorMessage: String) {
+        showErrorAlert(this, "DB Error", errorMessage, getString(R.string.close)) {}
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

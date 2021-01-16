@@ -322,7 +322,7 @@
                         <TextView
                             android:id="@+id/tvNohourly"
                             style="@style/MediumLightTextView"
-                            android:text="No hourly data"
+                            android:text="@string/no_hourly_data"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/medium_margin"
@@ -338,12 +338,12 @@
             </androidx.core.widget.NestedScrollView>
 
             <LinearLayout
-            android:visibility="visible"
-            android:id="@+id/llLoaderContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+                android:visibility="visible"
+                android:id="@+id/llLoaderContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
 
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/avlHeroLoader"

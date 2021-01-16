@@ -6,13 +6,13 @@ import androidx.room.*
 @Dao
 interface PreviousWeatherDAO {
     @Insert
-    fun insert(superheroesTable: PreviousWeatherTable)
+    fun insert(previousWeatherTable: PreviousWeatherTable)
 
     @Update
-    fun update(superheroesTable: PreviousWeatherTable)
+    fun update(previousWeatherTable: PreviousWeatherTable)
 
     @Delete
-    fun delete(superheroesTable: PreviousWeatherTable)
+    fun delete(previousWeatherTable: PreviousWeatherTable)
 
     @Query("SELECT * FROM weather_reports WHERE id = :key")
     fun get(key: Long): PreviousWeatherTable?

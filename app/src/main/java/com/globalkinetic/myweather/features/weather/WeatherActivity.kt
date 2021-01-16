@@ -236,6 +236,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         weatherViewModel.showLoading.observe(this, Observer { onShowLoading(it) })
         weatherViewModel.weather.observe(this, Observer { onWeatherSet(it) })
         weatherViewModel.hourly.observe(this, Observer { showHourlyWeather(it) })
+        weatherViewModel.isWeatherAdded.observe(this, Observer { onWeatherAddToPrevious(it) })
     }
 
     private fun onCurrentLocationSet(location: UserLocation) {
@@ -296,11 +297,14 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     }
 
+    fun onWeatherAddToPrevious(isAdded: Boolean) {
+        Toast.makeText(this, getString(R.string.added_weather), Toast.LENGTH_SHORT).show()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-
-                Toast.makeText(this, getString(R.string.added_weather), Toast.LENGTH_SHORT).show()
+                weatherViewModel.addWeatherToPreviousList()
             }
             R.id.action_view_reports -> {
                 navigateToActivity(

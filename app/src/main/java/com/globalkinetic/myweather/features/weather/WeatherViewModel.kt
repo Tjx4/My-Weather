@@ -35,6 +35,10 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val isWeatherError: MutableLiveData<Boolean>
         get() = _isWeatherError
 
+    private val _isWeatherAdded: MutableLiveData<Boolean> = MutableLiveData()
+    val isWeatherAdded: MutableLiveData<Boolean>
+        get() = _isWeatherAdded
+
     private var _temprature: MutableLiveData<Int> = MutableLiveData()
     val temprature: MutableLiveData<Int>
         get() = _temprature
@@ -102,6 +106,25 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
             }
         }
 
+    }
+
+    fun addWeatherToPreviousList() {
+        weather?.let {
+            ioScope.launch {
+                _weather.value?.let {
+                    var addWeather = weatherRepository.addToPreviousWeatherReports(it)
+
+                    uiScope.launch {
+                        if (addWeather.isSuccessful){
+                            _isWeatherAdded.value = true
+                        }
+                        else{
+                            //Weather add error
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

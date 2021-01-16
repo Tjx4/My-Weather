@@ -18,7 +18,7 @@ class WeatherRepository(private val retrofitHelper: RetrofitHelper, private val 
         }
     }
 
-    suspend fun addToPreviousReports(weather: Weather): DbOperation {
+    suspend fun addToPreviousWeatherReports(weather: Weather): DbOperation {
         return try {
             weatherDB.previousWeatherDAO.insert(weather.toWeatherTable())
             DbOperation(true)
@@ -27,7 +27,7 @@ class WeatherRepository(private val retrofitHelper: RetrofitHelper, private val 
         }
     }
 
-    suspend fun getPreviousReports(): List<Weather>? {
+    suspend fun getPreviousWeatherReports(): List<Weather>? {
         return try {
             val previousReports = ArrayList<Weather>()
             weatherDB.previousWeatherDAO.getAllHeroes()?.let {

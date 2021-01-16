@@ -3,7 +3,7 @@ package com.globalkinetic.myweather.models
 import com.google.gson.annotations.SerializedName
 
 data class Current(
-    @SerializedName("weather") var weather: List<WeatherInfo?>,
+    @SerializedName("weather") var weather: List<WeatherInfo?>?,
     @SerializedName("humidity") var humidity: Int?,
     @SerializedName("clouds") var clouds: Long?,
     @SerializedName("temp") var temp: Double?,

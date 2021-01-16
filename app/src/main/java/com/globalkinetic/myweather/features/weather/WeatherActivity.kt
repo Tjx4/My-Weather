@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,7 +24,6 @@ import com.globalkinetic.myweather.adapters.HourlyAdapter
 import com.globalkinetic.myweather.base.activities.BaseActivity
 import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
 import com.globalkinetic.myweather.extensions.FADE_IN_ACTIVITY
-import com.globalkinetic.myweather.extensions.SLIDE_IN_ACTIVITY
 import com.globalkinetic.myweather.extensions.navigateToActivity
 import com.globalkinetic.myweather.features.previous.PreviousWeatherActivity
 import com.globalkinetic.myweather.helpers.showErrorAlert
@@ -300,12 +300,13 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         when (item.itemId) {
             R.id.action_add -> {
 
+                Toast.makeText(this, getString(R.string.added_weather), Toast.LENGTH_SHORT).show()
             }
             R.id.action_view_reports -> {
                 navigateToActivity(
                     PreviousWeatherActivity::class.java,
                     null,
-                    SLIDE_IN_ACTIVITY
+                    FADE_IN_ACTIVITY
                 )
             }
         }

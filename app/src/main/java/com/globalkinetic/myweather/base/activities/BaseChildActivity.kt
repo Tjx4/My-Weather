@@ -2,6 +2,7 @@ package com.globalkinetic.myweather.base.activities
 
 import android.os.Bundle
 import android.view.MenuItem
+import com.globalkinetic.myweather.extensions.FADE_OUT_ACTIVITY
 import com.globalkinetic.myweather.extensions.SLIDE_OUT_ACTIVITY
 
 abstract class BaseChildActivity: BaseActivity() {
@@ -20,13 +21,13 @@ abstract class BaseChildActivity: BaseActivity() {
             }
         }
 
-        overridePendingTransition(SLIDE_OUT_ACTIVITY.inAnimation, SLIDE_OUT_ACTIVITY.outAnimation)
+        overridePendingTransition(FADE_OUT_ACTIVITY.inAnimation, FADE_OUT_ACTIVITY.outAnimation)
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(SLIDE_OUT_ACTIVITY.inAnimation, SLIDE_OUT_ACTIVITY.outAnimation)
+        overridePendingTransition(FADE_OUT_ACTIVITY.inAnimation, FADE_OUT_ACTIVITY.outAnimation)
     }
 
 }

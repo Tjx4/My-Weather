@@ -84,9 +84,9 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
             uiScope.launch {
                 if(weather != null){
                     _weather.value = weather
+                    _weather.value?.locationName = _currentLocation.value?.name
                     _temprature.value = fahrenheitToCelsius(weather?.current?.temp ?: 0.0)
                     _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
-
                     _description.value = weather?.current?.weather?.get(0)?.description ?: ""
 
                     weather?.hourly?.let {

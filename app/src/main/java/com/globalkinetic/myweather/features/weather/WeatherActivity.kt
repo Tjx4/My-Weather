@@ -32,9 +32,11 @@ import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_weather.*
+
 
 class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding
@@ -57,9 +59,9 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
         addObservers()
 
-        checkGoogleApi()
-
         setSupportActionBar(toolbar)
+
+        checkPlayServicesAndPermission()
     }
 
     fun isGPSOn(): Boolean {
@@ -75,19 +77,29 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-    fun checkGoogleApi() {
+    fun checkPlayServicesAndPermission() {
+        checkGoogleApi {
+            checkLocationPermissionAndContinue {
+                checkGPSAndProceed {
+                    initLocation()
+                }
+            }
+        }
+    }
+
+    fun checkGoogleApi(onSuccessCallback: () -> Unit = {}) {
         val api = GoogleApiAvailability.getInstance()
         val isAv = api.isGooglePlayServicesAvailable(this)
 
         if (isAv == ConnectionResult.SUCCESS) {
-            checkLocationPermissionAndContinue()
+            onSuccessCallback.invoke()
 
         } else if (api.isUserResolvableError(isAv)) {
             showErrorAlert(
                 this,
                 getString(R.string.google_play_error),
                 getString(R.string.google_play_error_message),
-                getString(R.string.try_again)
+                getString(R.string.close)
             ) {
                 finish()
             }
@@ -97,7 +109,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
                 this,
                 getString(R.string.google_play_error),
                 getString(R.string.google_play_error_message),
-                getString(R.string.try_again)
+                getString(R.string.close)
             ) {
                 finish()
             }
@@ -105,9 +117,9 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-    private fun checkLocationPermissionAndContinue() {
+    private fun checkLocationPermissionAndContinue(onSuccessCallback: () -> Unit = {}) {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            checkGPSAndProceed()
+            onSuccessCallback.invoke()
         } else {
             ActivityCompat.requestPermissions(
                 this,
@@ -117,9 +129,9 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-    fun checkGPSAndProceed() {
+    fun checkGPSAndProceed(onSuccessCallback: () -> Unit = {}) {
         if (isGPSOn()) {
-            initLocation()
+            onSuccessCallback.invoke()
         } else {
             showErrorAlert(
                 this,
@@ -133,6 +145,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     fun initLocation() {
+
         locationRequest = LocationRequest()
         locationRequest?.interval = 20000
         locationRequest?.fastestInterval = 1000
@@ -161,13 +174,14 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         val fusedLocationClient = getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location == null) {
+
                 showErrorAlert(
                     this,
                     getString(R.string.unknown_location),
                     getString(R.string.unable_to_get_location),
                     getString(R.string.try_again)
                 ) {
-                    checkLocationPermissionAndContinue()
+                    initLocation()
                 }
                 return@addOnSuccessListener
             }
@@ -184,6 +198,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
                 finish()
             }
         }
+
     }
 
     fun onLocationRequestListenerSuccess(location: Location?) {
@@ -287,6 +302,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         var hourlyAdapter = HourlyAdapter(this, hourly)
         hourlyAdapter.setHourlyClickListener(this)
         rvHourly?.adapter = hourlyAdapter
+
         val snapHelper: SnapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(rvHourly)
 

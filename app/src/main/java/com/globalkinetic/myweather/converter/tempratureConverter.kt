@@ -1,6 +1,12 @@
 package com.globalkinetic.myweather.converter
 
-fun fahrenheitToCelsius(fahrenheit: Double): Int{
-    val celsius = (fahrenheit - 32.0) * 5.0 / 9.0
-    return celsius.toInt()
+fun fahrenheitToCelsius(temp: Double): Int{
+    return  try {
+        val fahrenheit = temp / 3
+        val celsius = (fahrenheit / 2) * 5.0 / 9.0
+        celsius.toInt()
+    }
+    catch (ex: Exception){
+        temp.toInt()
+    }
 }

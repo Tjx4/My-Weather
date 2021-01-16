@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.globalkinetic.myweather.R
+import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.Weather
 
 class PreviousWeatherReportsAdapter(context: Context, private val previousWeatherReports: List<Weather>?) : RecyclerView.Adapter<PreviousWeatherReportsAdapter.ViewHolder>() {
@@ -20,15 +21,20 @@ class PreviousWeatherReportsAdapter(context: Context, private val previousWeathe
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val searchType = previousWeatherReports?.get(position)
+        val previousWeatherReport = previousWeatherReports?.get(position)
 
-      //  holder.nameTv.text = getFormatedTime(searchType?.dt ?: 0)
-
+        holder.locationNameTv.text = previousWeatherReport?.locationName
+        holder.dateTimeTv.text = getFormatedDate(previousWeatherReport?.current?.dt ?: 0)
+        holder.descriptionTv.text = previousWeatherReport?.current?.weather?.get(0)?.description
+        holder.precipTv.text = "${previousWeatherReport?.current?.humidity}%"
     }
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-       // internal var nameTv: TextView = itemView.findViewById(R.id.tvTime)
+        internal var locationNameTv: TextView = itemView.findViewById(R.id.tvLocationName)
+        internal var dateTimeTv: TextView = itemView.findViewById(R.id.tvDateTime)
+        internal var descriptionTv: TextView = itemView.findViewById(R.id.tvDescription)
+        internal var precipTv: TextView = itemView.findViewById(R.id.tvPrecip)
 
         init {
             itemView.setOnClickListener(this)

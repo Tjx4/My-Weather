@@ -14,7 +14,7 @@ fun getAreaName(latLong: LatLng, context: Context): String {
         val addresses: List<Address> = geocoder.getFromLocation(latLong.latitude, latLong.longitude, 1)
         val address: Address = addresses[0]
         //var add: String = obj.getAddressLine(0)
-        area = address.subLocality
+        area = address.subLocality ?: ""
         //obj.getAdminArea()
     } catch (e: IOException) {
     }

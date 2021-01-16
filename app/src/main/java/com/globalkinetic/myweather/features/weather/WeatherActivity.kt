@@ -24,6 +24,7 @@ import com.globalkinetic.myweather.adapters.HourlyAdapter
 import com.globalkinetic.myweather.base.activities.BaseActivity
 import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
 import com.globalkinetic.myweather.extensions.FADE_IN_ACTIVITY
+import com.globalkinetic.myweather.extensions.SLIDE_IN_ACTIVITY
 import com.globalkinetic.myweather.extensions.navigateToActivity
 import com.globalkinetic.myweather.features.previous.PreviousWeatherActivity
 import com.globalkinetic.myweather.helpers.showErrorAlert
@@ -145,7 +146,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     fun initLocation() {
-
         locationRequest = LocationRequest()
         locationRequest?.interval = 20000
         locationRequest?.fastestInterval = 1000
@@ -198,7 +198,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
                 finish()
             }
         }
-
     }
 
     fun onLocationRequestListenerSuccess(location: Location?) {
@@ -331,7 +330,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
                 navigateToActivity(
                     PreviousWeatherActivity::class.java,
                     null,
-                    FADE_IN_ACTIVITY
+                    SLIDE_IN_ACTIVITY
                 )
             }
         }

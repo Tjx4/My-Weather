@@ -21,13 +21,13 @@ abstract class BaseChildActivity: BaseActivity() {
             }
         }
 
-        overridePendingTransition(FADE_OUT_ACTIVITY.inAnimation, FADE_OUT_ACTIVITY.outAnimation)
+        overridePendingTransition(SLIDE_OUT_ACTIVITY.inAnimation, SLIDE_OUT_ACTIVITY.outAnimation)
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(FADE_OUT_ACTIVITY.inAnimation, FADE_OUT_ACTIVITY.outAnimation)
+        overridePendingTransition(SLIDE_OUT_ACTIVITY.inAnimation, SLIDE_OUT_ACTIVITY.outAnimation)
     }
 
 }

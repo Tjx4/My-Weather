@@ -1,10 +1,8 @@
 package com.globalkinetic.myweather.features.weather
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Looper
 import android.view.KeyEvent
@@ -54,9 +52,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         binding.lifecycleOwner = this
 
         addObservers()
-
+        initViews()
         setSupportActionBar(toolbar)
-
         checkPlayServicesAndPermission()
     }
 
@@ -125,7 +122,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location == null) {
 
-                showErrorAlert(
+                showErrorDialog(
                     this,
                     getString(R.string.unknown_location),
                     getString(R.string.unable_to_get_location),
@@ -139,7 +136,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
             onLocationRequestListenerSuccess(location)
         }
         fusedLocationClient.lastLocation.addOnFailureListener {
-            showErrorAlert(
+            showErrorDialog(
                 this,
                 getString(R.string.location_error),
                 getString(R.string.location_retrieve_error),
@@ -162,7 +159,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         clContent.visibility = View.VISIBLE
         app_bar_layout.visibility = View.VISIBLE
 
-        showErrorAlert(
+        showErrorDialog(
             this,
             getString(R.string.error),
             getString(R.string.permission_denied, "(Location permission),"),
@@ -194,7 +191,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun onLocationError(isLocationError: Boolean) {
-        showErrorAlert(
+        showErrorDialog(
             this,
             getString(R.string.error),
             getString(R.string.location_error),
@@ -205,7 +202,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun onWeatherError(isWeatherError: Boolean) {
-        showErrorAlert(
+        showErrorDialog(
             this,
             getString(R.string.error),
             getString(R.string.weather_error),
@@ -221,18 +218,20 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         app_bar_layout.visibility = View.VISIBLE
     }
 
+    fun initViews() {
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(rvHourly)
+    }
+
     private fun showHourlyWeather(hourly: List<Current>?) {
         val searchTypeLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        searchTypeLayoutManager.initialPrefetchItemCount = hourly?.size ?: 0
         rvHourly?.layoutManager = searchTypeLayoutManager
+
         var hourlyAdapter = HourlyAdapter(this, hourly)
         hourlyAdapter.setHourlyClickListener(this)
         rvHourly?.adapter = hourlyAdapter
-
-        val snapHelper: SnapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(rvHourly)
 
         rvHourly.visibility = View.VISIBLE
         tvNohourly.visibility = View.GONE
@@ -247,13 +246,23 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     fun onSqlitDbError(errorMessage: String) {
-        showErrorAlert(this, getString(R.string.db_error), errorMessage, getString(R.string.close)) {}
+        showErrorDialog(this, getString(R.string.db_error), errorMessage, getString(R.string.close)) {}
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                weatherViewModel.addWeatherToPreviousList()
+
+                showConfirmDialog(this,
+                    getString(R.string.confirm),
+                    getString(R.string.add_weather_confirm_message),
+                    getString(R.string.proceed),
+                    getString(R.string.cancel), {
+                        weatherViewModel.addWeatherToPreviousList()
+
+                    }, {
+
+                    })
             }
             R.id.action_view_reports -> {
                 navigateToActivity(

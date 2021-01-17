@@ -14,7 +14,7 @@ fun checkGoogleApi(activity: Activity, onSuccessCallback: () -> Unit = {}) {
         onSuccessCallback.invoke()
 
     } else if (api.isUserResolvableError(isAv)) {
-        showErrorAlert(
+        showErrorDialog(
             activity,
             activity.getString(R.string.google_play_error),
             activity.getString(R.string.google_play_error_message),
@@ -24,7 +24,7 @@ fun checkGoogleApi(activity: Activity, onSuccessCallback: () -> Unit = {}) {
         }
 
     } else {
-        showErrorAlert(
+        showErrorDialog(
             activity,
             activity.getString(R.string.google_play_error),
             activity.getString(R.string.google_play_error_message),

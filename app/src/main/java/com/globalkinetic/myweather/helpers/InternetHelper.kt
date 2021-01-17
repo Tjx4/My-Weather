@@ -14,7 +14,7 @@ fun isNetworkAvailable(context: Context, onSuccessCallback: () -> Unit = {}) {
         onSuccessCallback.invoke()
     }
     else{
-        showErrorAlert(
+        showErrorDialog(
             context,
             context.getString(R.string.internet_error),
             context.getString(R.string.internet_error_message),

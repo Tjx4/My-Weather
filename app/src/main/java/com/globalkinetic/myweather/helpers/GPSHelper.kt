@@ -24,7 +24,7 @@ fun checkGPSAndProceed(context: Context, onSuccessCallback: () -> Unit = {}) {
     if (isGPSOn(context)) {
         onSuccessCallback.invoke()
     } else {
-        showErrorAlert(
+        showErrorDialog(
             context,
             context.getString(R.string.gps_error_title),
             context.getString(R.string.gps_error_message),

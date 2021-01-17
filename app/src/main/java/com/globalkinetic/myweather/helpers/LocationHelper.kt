@@ -7,17 +7,44 @@ import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 import java.util.*
 
-suspend fun getAreaName(latLong: LatLng, context: Context): String {
-    var area = ""
-    val geocoder = Geocoder(context, Locale.getDefault())
-    try {
+suspend fun getCurrentLocation(latLong: LatLng, context: Context): String {
+
+    return try {
+        val geocoder = Geocoder(context, Locale.getDefault())
         val addresses: List<Address> = geocoder.getFromLocation(latLong.latitude, latLong.longitude, 1)
         val address: Address = addresses[0]
         //var add: String = obj.getAddressLine(0)
-        area = address.subLocality ?: ""
-        //obj.getAdminArea()
-    } catch (e: IOException) {
-    }
+        var location = ""
 
-    return area
+        val area = address.subLocality ?: ""
+        if(area.isNullOrEmpty()){
+            val city = address.locality ?: ""
+            if(city.isNullOrEmpty()){
+                val province = address.adminArea ?: ""
+                if(province.isNullOrEmpty()){
+                    val country = address.countryName ?: ""
+                    if(country.isNullOrEmpty()){
+
+                    }
+                    else{
+                         location = country
+                    }
+                }
+                else{
+                     location = province
+                }
+            }
+            else{
+                 location = city
+            }
+        }
+        else{
+             location = area
+        }
+
+        location
+
+    } catch (e: IOException) {
+        ""
+    }
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
-import com.globalkinetic.myweather.helpers.getAreaName
+import com.globalkinetic.myweather.helpers.getCurrentLocation
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.UserLocation
@@ -76,11 +76,11 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
         _showLoading.value = true
 
         ioScope.launch {
-            val locationName = getAreaName(LatLng(location.latitude, location.longitude), app)
+            val currentLocation = getCurrentLocation(LatLng(location.latitude, location.longitude), app)
 
             uiScope.launch {
                 val userCoordinates = LatLng(location?.latitude, location?.longitude)
-                val userLocation = UserLocation(locationName, "", userCoordinates, "")
+                val userLocation = UserLocation(currentLocation, "", userCoordinates, "")
 
                 _currentLocation.value = userLocation
             }

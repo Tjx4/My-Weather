@@ -1,5 +1,5 @@
 package com.globalkinetic.myweather.converter
 
-fun fahrenheitToCelsius(temp: Double): Int{
+fun temperatureToSingleDecimal(temp: Double): Int{
     return temp.toInt()
 }

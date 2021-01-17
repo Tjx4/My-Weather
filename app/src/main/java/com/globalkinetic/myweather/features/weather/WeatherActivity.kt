@@ -188,6 +188,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         llLoaderContainer.visibility = View.VISIBLE
         clContent.visibility = View.INVISIBLE
         app_bar_layout.visibility = View.INVISIBLE
+        fabRefresh.visibility = View.INVISIBLE
     }
 
     private fun onLocationError(isLocationError: Boolean) {
@@ -216,6 +217,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         llLoaderContainer.visibility = View.GONE
         clContent.visibility = View.VISIBLE
         app_bar_layout.visibility = View.VISIBLE
+        fabRefresh.visibility = View.VISIBLE
     }
 
     fun initViews() {
@@ -249,6 +251,10 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         showErrorDialog(this, getString(R.string.db_error), errorMessage, getString(R.string.close)) {}
     }
 
+    fun onRefreshButtonClicked(view: View) {
+        initLocation()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
@@ -278,15 +284,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.dashboard_menu, menu)
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(true)
-            return super.onKeyDown(keyCode, event)
-        }
-
-        return true
     }
 
 }

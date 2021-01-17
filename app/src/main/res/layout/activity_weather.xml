@@ -417,6 +417,18 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRefresh"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            app:backgroundTint="@color/splashGradientEnd"
+            android:tint="@color/lightText"
+            android:layout_margin="@dimen/medium_margin"
+            android:src="@drawable/ic_refresh_light"
+            android:onClick="onRefreshButtonClicked"/>
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

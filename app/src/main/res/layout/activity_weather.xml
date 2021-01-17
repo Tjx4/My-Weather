@@ -125,17 +125,71 @@
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tvMessage"
-                            style="@style/MediumLightTextView"
-                            tools:text="30 / 26 Feels like 30"
-                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.wind_speed.toString(), `0`) + ` / ` + StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString(), `0`) + ` Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
+
+                        <LinearLayout
+                            android:id="@+id/llHWF"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             android:layout_marginTop="@dimen/small_margin"
                             app:layout_constraintTop_toBottomOf="@+id/llCurrentTemp"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"/>
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <ImageView
+                                android:id="@+id/imgHumidity"
+                                android:layout_width="20dp"
+                                android:layout_height="17dp"
+                                android:src="@drawable/ic_humidity_light"
+                                android:layout_gravity="center"/>
+
+                            <TextView
+                                android:id="@+id/tvHumidity"
+                                style="@style/MediumLightTextView"
+                                tools:text="30"
+                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString(), `0`)}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/xxxsmall_margin"/>
+
+
+                            <ImageView
+                                android:id="@+id/imgWindSpeed"
+                                android:layout_width="20dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_wind_speed_light"
+                                android:layout_marginLeft="@dimen/xsmall_margin"
+                                android:layout_gravity="center"/>
+
+                            <TextView
+                                android:id="@+id/tvWindSpeed"
+                                style="@style/MediumLightTextView"
+                                tools:text="26"
+                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.wind_speed.toString(), `0`)}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/xxxsmall_margin"/>
+
+                            <TextView
+                                android:id="@+id/tvSpliter"
+                                style="@style/MediumLightTextView"
+                                android:text=" / "
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/xsmall_margin"/>
+
+                            <TextView
+                                android:id="@+id/tvMessage"
+                                style="@style/MediumLightTextView"
+                                tools:text="Feels like 30"
+                                android:text="@{`Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/xsmall_margin"/>
+
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/tvBreakDown"
@@ -145,7 +199,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"
-                            app:layout_constraintTop_toBottomOf="@+id/tvMessage"
+                            app:layout_constraintTop_toBottomOf="@+id/llHWF"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"/>
 

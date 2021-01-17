@@ -14,7 +14,7 @@ class WeatherRepository(private val retrofitHelper: RetrofitHelper, private val 
         return try {
             retrofitHelper.getMyLocationWeather(apiKey, latLng?.latitude, latLng?.longitude, "metric")
         } catch (ex: Exception){
-            Weather("", null, null, null)
+            Weather("", null, null, null, null)
         }
     }
 

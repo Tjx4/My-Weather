@@ -26,6 +26,8 @@ data class PreviousWeatherTable (
     var description:String? = null,
     @ColumnInfo(name = "precipitation")
     var precipitation:Int = 0,
+    @ColumnInfo(name = "pop")
+    var pop:Double = 0.0,
     @ColumnInfo(name = "uv")
     var uv:Double = 0.0,
 

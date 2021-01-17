@@ -23,6 +23,6 @@ fun Weather.toWeatherTable(): PreviousWeatherTable {
 fun PreviousWeatherTable.toWeather(): Weather {
     val weatherInfo = ArrayList<WeatherInfo>()
     weatherInfo.add(WeatherInfo(this.description, null))
-    val current = Current(weatherInfo, this.precipitation, null, this.temperature.toDouble(), this.dt, this.feelsLike, 0.0, this.uv, 0.0)
-    return Weather("", current, null, locationName)
+    val current = Current(weatherInfo, this.precipitation, null, this.temperature.toDouble(), this.dt, this.feelsLike, 0.0, this.uv, this.pop)
+    return Weather("", current, null, null, locationName)
 }

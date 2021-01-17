@@ -59,6 +59,10 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val description: MutableLiveData<String>
         get() = _description
 
+    private val _precipitation: MutableLiveData<String> = MutableLiveData()
+    val precipitation: MutableLiveData<String>
+        get() = _precipitation
+
     private var _currentDateTime: MutableLiveData<String> = MutableLiveData()
     val currentDateTime: MutableLiveData<String>
         get() = _currentDateTime
@@ -83,7 +87,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
         var currentCoordinates = _currentLocation.value?.coordinates ?: LatLng(0.0, 0.0)
 
         ioScope.launch {
-            var weather: Weather? = weatherRepository.getWeather(API_KEY, currentCoordinates)
+            var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
 
             uiScope.launch {
                 if(weather != null){
@@ -92,6 +96,12 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                     _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
                     _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
                     _description.value = weather?.current?.weather?.get(0)?.description ?: ""
+
+                    weather?.daily?.let {
+                        if(it.isNotEmpty()){
+                            _precipitation.value = "${it[0]?.pop ?: 0}"
+                        }
+                    }
 
                     weather?.hourly?.let {
                         if(it.isNotEmpty()){

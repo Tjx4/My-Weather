@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -52,7 +51,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         binding.lifecycleOwner = this
 
         addObservers()
-        initViews()
+        initActivity()
         setSupportActionBar(toolbar)
         checkPlayServicesAndPermission()
     }
@@ -92,32 +91,17 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-    fun initLocation() {
+    fun initActivity() {
         locationRequest = LocationRequest()
         locationRequest?.interval = 20000
         locationRequest?.fastestInterval = 1000
         locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
-        val locationCallback: LocationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                if (locationResult == null) {
-                    return
-                }
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(rvHourly)
+    }
 
-                for (location in locationResult.locations) {
-                    if (location != null) {
-                        onLocationChanged(location)
-                    }
-                }
-            }
-        }
-
-        getFusedLocationProviderClient(this).requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.myLooper()
-        )
-
+    fun initLocation() {
         val fusedLocationClient = getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location == null) {
@@ -185,10 +169,10 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun onShowLoading(isBusy: Boolean) {
-        llLoaderContainer.visibility = View.VISIBLE
         clContent.visibility = View.INVISIBLE
         app_bar_layout.visibility = View.INVISIBLE
         fabRefresh.visibility = View.INVISIBLE
+        llLoaderContainer.visibility = View.VISIBLE
     }
 
     private fun onLocationError(isLocationError: Boolean) {
@@ -218,11 +202,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         clContent.visibility = View.VISIBLE
         app_bar_layout.visibility = View.VISIBLE
         fabRefresh.visibility = View.VISIBLE
-    }
-
-    fun initViews() {
-        val snapHelper: SnapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(rvHourly)
     }
 
     private fun showHourlyWeather(hourly: List<Current>?) {

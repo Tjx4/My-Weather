@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.globalkinetic.myweather.R
-import com.globalkinetic.myweather.converter.fahrenheitToCelsius
+import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
 import com.globalkinetic.myweather.helpers.getFormatedTime
 import com.globalkinetic.myweather.models.Current
 
@@ -26,7 +26,7 @@ class HourlyAdapter(context: Context, private val hourly: List<Current>?) : Recy
 
         holder.nameTv.text = getFormatedTime(weather?.dt ?: 0)
         holder.cloudsTv.text =   "${weather?.clouds ?: 0}%"
-        holder.tempTv.text = "${fahrenheitToCelsius(weather?.temp ?: 0.0)}"
+        holder.tempTv.text = "${temperatureToSingleDecimal(weather?.temp ?: 0.0)}"
     }
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),

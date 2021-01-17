@@ -3,17 +3,13 @@ package com.globalkinetic.myweather.features.weather
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import android.provider.Settings
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,12 +23,13 @@ import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
 import com.globalkinetic.myweather.extensions.SLIDE_IN_ACTIVITY
 import com.globalkinetic.myweather.extensions.navigateToActivity
 import com.globalkinetic.myweather.features.previous.PreviousWeatherActivity
+import com.globalkinetic.myweather.helpers.checkGPSAndProceed
+import com.globalkinetic.myweather.helpers.checkGoogleApi
+import com.globalkinetic.myweather.helpers.checkLocationPermissionAndContinue
 import com.globalkinetic.myweather.helpers.showErrorAlert
 import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_weather.*
@@ -58,87 +55,17 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
         addObservers()
 
-        checkPlayServicesAndPermission()
-
         setSupportActionBar(toolbar)
+
+        checkPlayServicesAndPermission()
     }
 
-    fun isGPSOn(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val lm = this.getSystemService(LOCATION_SERVICE) as LocationManager
-            lm.isLocationEnabled
-        } else {
-            val mode = Settings.Secure.getInt(
-                this.contentResolver, Settings.Secure.LOCATION_MODE,
-                Settings.Secure.LOCATION_MODE_OFF
-            )
-            mode != Settings.Secure.LOCATION_MODE_OFF
-        }
-    }
-
-    fun checkPlayServicesAndPermission() {
-        checkGoogleApi {
-            checkLocationPermissionAndContinue {
-                checkGPSAndProceed {
+    private fun checkPlayServicesAndPermission() {
+        checkGoogleApi(this) {
+            checkLocationPermissionAndContinue(this) {
+                checkGPSAndProceed(this) {
                     initLocation()
                 }
-            }
-        }
-    }
-
-    fun checkGoogleApi(onSuccessCallback: () -> Unit = {}) {
-        val api = GoogleApiAvailability.getInstance()
-        val isAv = api.isGooglePlayServicesAvailable(this)
-
-        if (isAv == ConnectionResult.SUCCESS) {
-            onSuccessCallback.invoke()
-
-        } else if (api.isUserResolvableError(isAv)) {
-            showErrorAlert(
-                this,
-                getString(R.string.google_play_error),
-                getString(R.string.google_play_error_message),
-                getString(R.string.close)
-            ) {
-                finish()
-            }
-
-        } else {
-            showErrorAlert(
-                this,
-                getString(R.string.google_play_error),
-                getString(R.string.google_play_error_message),
-                getString(R.string.close)
-            ) {
-                finish()
-            }
-
-        }
-    }
-
-    private fun checkLocationPermissionAndContinue(onSuccessCallback: () -> Unit = {}) {
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            onSuccessCallback.invoke()
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-        }
-    }
-
-    fun checkGPSAndProceed(onSuccessCallback: () -> Unit = {}) {
-        if (isGPSOn()) {
-            onSuccessCallback.invoke()
-        } else {
-            showErrorAlert(
-                this,
-                getString(R.string.gps_error_title),
-                getString(R.string.gps_error_message),
-                getString(R.string.try_again)
-            ) {
-                checkGPSAndProceed()
             }
         }
     }
@@ -219,7 +146,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
             if (permission == Manifest.permission.ACCESS_FINE_LOCATION) {
                 if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                    checkGPSAndProceed()
+                    checkGPSAndProceed(this)
                 } else {
                     onLocationPermissionDenied()
                 }
@@ -316,7 +243,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     fun onSqlitDbError(errorMessage: String) {
-        showErrorAlert(this, "DB Error", errorMessage, getString(R.string.close)) {}
+        showErrorAlert(this, getString(R.string.db_error), errorMessage, getString(R.string.close)) {}
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

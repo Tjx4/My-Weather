@@ -3,10 +3,9 @@ package com.globalkinetic.myweather.features.weather
 import android.app.Application
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
-import com.globalkinetic.myweather.R
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
-import com.globalkinetic.myweather.converter.fahrenheitToCelsius
+import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
 import com.globalkinetic.myweather.helpers.getAreaName
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.Current
@@ -14,10 +13,7 @@ import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
-import kotlinx.android.synthetic.main.activity_weather.view.*
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(
     application
@@ -93,7 +89,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                 if(weather != null){
                     _weather.value = weather
                     _weather.value?.locationName = _currentLocation.value?.name
-                    _temprature.value = fahrenheitToCelsius(weather?.current?.temp ?: 0.0)
+                    _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
                     _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
                     _description.value = weather?.current?.weather?.get(0)?.description ?: ""
 

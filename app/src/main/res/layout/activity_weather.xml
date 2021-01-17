@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import
-            alias="StringExtension"
-            type="com.globalkinetic.myweather.extensions.StringExtensionsKt"/>
+            alias="nullToDefaultConverterKt"
+            type="com.globalkinetic.myweather.converter.NullToDefaultConverterKt"/>
 
         <variable
             name="weatherViewModel"
@@ -69,7 +69,7 @@
                             <TextView
                                 style="@style/MediumLightTextView"
                                 tools:text="Location"
-                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.currentLocation.name , `Unknown`)}"
+                                android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.currentLocation.name , `Unknown`)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"
@@ -81,7 +81,7 @@
                             android:id="@+id/tvDateTime"
                             style="@style/MediumLightTextView"
                             tools:text="Wed 9 Jan 2021 10:00 Am"
-                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.currentDateTime , `Unknown`)}"
+                            android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.currentDateTime , `Unknown`)}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"
@@ -109,7 +109,7 @@
                             <TextView
                                 style="@style/XLargeLightTextView"
                                 tools:text="29"
-                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.temprature.toString(), `0`)}"
+                                android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.temprature.toString(), `0`)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"/>
@@ -147,7 +147,7 @@
                                 android:id="@+id/tvHumidity"
                                 style="@style/MediumLightTextView"
                                 tools:text="30"
-                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString(), `0`)}"
+                                android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.weather.current.humidity.toString(), `0`)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -166,7 +166,7 @@
                                 android:id="@+id/tvWindSpeed"
                                 style="@style/MediumLightTextView"
                                 tools:text="26"
-                                android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.wind_speed.toString(), `0`)}"
+                                android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.weather.current.wind_speed.toString(), `0`)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -184,7 +184,7 @@
                                 android:id="@+id/tvMessage"
                                 style="@style/MediumLightTextView"
                                 tools:text="Feels like 30"
-                                android:text="@{`Feels like ` + StringExtension.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
+                                android:text="@{`Feels like ` + nullToDefaultConverterKt.nullToDefValue( weatherViewModel.weather.current.feels_like.toString() , `0`)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/xsmall_margin"/>
@@ -195,7 +195,7 @@
                             android:id="@+id/tvBreakDown"
                             style="@style/MediumLightTextView"
                             tools:text="Cloudy"
-                            android:text="@{StringExtension.nullToDefValue( weatherViewModel.description, `Unknown`)}"
+                            android:text="@{nullToDefaultConverterKt.nullToDefValue( weatherViewModel.description, `Unknown`)}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/small_margin"
@@ -283,7 +283,7 @@
                         <TextView
                             style="@style/MediumLightTextView"
                             tools:text="10%"
-                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.humidity.toString() + `%`, `0%`)}"
+                            android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.weather.current.humidity.toString() + `%`, `0%`)}"
                             android:textStyle="bold"
                             android:layout_marginRight="@dimen/small_margin"
                             android:layout_width="wrap_content"
@@ -329,7 +329,7 @@
                         <TextView
                             style="@style/MediumLightTextView"
                             tools:text="0"
-                            android:text="@{StringExtension.nullToDefValue(weatherViewModel.weather.current.uvi.toString(), `0`)}"
+                            android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.weather.current.uvi.toString(), `0`)}"
                             android:textStyle="bold"
                             android:layout_marginRight="@dimen/small_margin"
                             android:layout_width="wrap_content"

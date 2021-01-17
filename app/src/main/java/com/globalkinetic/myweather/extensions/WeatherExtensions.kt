@@ -1,6 +1,6 @@
 package com.globalkinetic.myweather.extensions
 
-import com.globalkinetic.myweather.converter.fahrenheitToCelsius
+import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
 import com.globalkinetic.myweather.database.tables.PreviousWeatherTable
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.Current
@@ -12,7 +12,7 @@ fun Weather.toWeatherTable(): PreviousWeatherTable {
     previousWeatherTable.locationName = this.locationName
     previousWeatherTable.dateTime = getFormatedDate(this?.current?.dt ?: 0)
     previousWeatherTable.dt = this?.current?.dt
-    previousWeatherTable.temperature = fahrenheitToCelsius(this?.current?.temp ?: 0.0)
+    previousWeatherTable.temperature = temperatureToSingleDecimal(this?.current?.temp ?: 0.0)
     previousWeatherTable.feelsLike = this.current?.feels_like
     previousWeatherTable.description = "${this.current?.weather?.get(0)?.description}"
     previousWeatherTable.precipitation = this.current?.humidity ?: 0

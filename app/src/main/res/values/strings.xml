@@ -22,4 +22,5 @@
     <string name="added_weather">Weather report added</string>
     <string name="no_hourly_data">No hourly data</string>
     <string name="no_previous_weather_reports_found">No previous weather reports found</string>
+    <string name="db_error">DB Error</string>
 </resources>

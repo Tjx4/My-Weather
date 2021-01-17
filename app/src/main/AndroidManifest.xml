@@ -16,7 +16,11 @@
         android:theme="@style/Theme.MyWeather">
         <activity
             android:name=".features.previous.PreviousWeatherActivity"
-            android:theme="@style/NoActionBarTheme"></activity>
+            android:theme="@style/NoActionBarTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".features.weather.WeatherActivity" />
+        </activity>
         <activity
             android:name=".features.weather.WeatherActivity"
             android:theme="@style/NoActionBarTheme"

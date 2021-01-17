@@ -3,7 +3,7 @@ package com.globalkinetic.myweather.repositories
 import com.globalkinetic.myweather.database.WeatherDB
 import com.globalkinetic.myweather.extensions.toWeather
 import com.globalkinetic.myweather.extensions.toWeatherTable
-import com.globalkinetic.myweather.helpers.RetrofitHelper
+import com.globalkinetic.myweather.networking.RetrofitHelper
 import com.globalkinetic.myweather.models.DbOperation
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.maps.model.LatLng
@@ -12,7 +12,7 @@ class WeatherRepository(private val retrofitHelper: RetrofitHelper, private val 
 
     suspend fun getWeather(apiKey: String, latLng: LatLng) : Weather? {
         return try {
-            retrofitHelper.getMyLocationWeather(apiKey, latLng?.latitude, latLng?.longitude)
+            retrofitHelper.getMyLocationWeather(apiKey, latLng?.latitude, latLng?.longitude, "metric")
         } catch (ex: Exception){
             Weather("", null, null, null)
         }

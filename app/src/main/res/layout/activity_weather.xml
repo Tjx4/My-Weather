@@ -236,7 +236,7 @@
                     <TextView
                         android:id="@+id/tvMoreInfo"
                         style="@style/MediumLightTextView"
-                        android:text="More details"
+                        android:text="@string/today"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/xlarge_margin"

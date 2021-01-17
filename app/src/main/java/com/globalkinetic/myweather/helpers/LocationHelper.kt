@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 import java.util.*
 
-fun getAreaName(latLong: LatLng, context: Context): String {
+suspend fun getAreaName(latLong: LatLng, context: Context): String {
     var area = ""
     val geocoder = Geocoder(context, Locale.getDefault())
     try {

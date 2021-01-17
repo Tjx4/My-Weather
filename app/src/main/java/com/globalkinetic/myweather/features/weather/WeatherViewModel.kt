@@ -67,19 +67,25 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val currentDateTime: MutableLiveData<String>
         get() = _currentDateTime
 
-    fun checkAndSetLocation(location: Location?){
-        if(location == null){
+    fun checkAndSetLocation(location: Location?) {
+        if (location == null) {
             _isLocationError.value = true
             return
         }
 
         _showLoading.value = true
 
-        val userCoordinates = LatLng(location?.latitude, location?.longitude)
-        val locationName = getAreaName(LatLng(location.latitude, location.longitude), app)
-        val userLocation = UserLocation(locationName, "", userCoordinates, "")
+        ioScope.launch {
+            val locationName = getAreaName(LatLng(location.latitude, location.longitude), app)
 
-        _currentLocation.value = userLocation
+            uiScope.launch {
+                val userCoordinates = LatLng(location?.latitude, location?.longitude)
+                val userLocation = UserLocation(locationName, "", userCoordinates, "")
+
+                _currentLocation.value = userLocation
+            }
+        }
+
     }
 
     fun getAndSetWeather(location: UserLocation){

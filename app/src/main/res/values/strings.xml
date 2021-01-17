@@ -23,4 +23,6 @@
     <string name="no_hourly_data">No hourly data</string>
     <string name="no_previous_weather_reports_found">No previous weather reports found</string>
     <string name="db_error">DB Error</string>
+    <string name="internet_error">Internet error</string>
+    <string name="internet_error_message">Please check your internet connection and try again</string>
 </resources>

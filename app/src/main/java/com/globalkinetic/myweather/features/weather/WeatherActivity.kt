@@ -1,8 +1,10 @@
 package com.globalkinetic.myweather.features.weather
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Looper
 import android.view.KeyEvent
@@ -23,16 +25,14 @@ import com.globalkinetic.myweather.databinding.ActivityWeatherBinding
 import com.globalkinetic.myweather.extensions.SLIDE_IN_ACTIVITY
 import com.globalkinetic.myweather.extensions.navigateToActivity
 import com.globalkinetic.myweather.features.previous.PreviousWeatherActivity
-import com.globalkinetic.myweather.helpers.checkGPSAndProceed
-import com.globalkinetic.myweather.helpers.checkGoogleApi
-import com.globalkinetic.myweather.helpers.checkLocationPermissionAndContinue
-import com.globalkinetic.myweather.helpers.showErrorAlert
+import com.globalkinetic.myweather.helpers.*
 import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.UserLocation
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_weather.*
+
 
 class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding
@@ -64,12 +64,13 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         checkGoogleApi(this) {
             checkLocationPermissionAndContinue(this) {
                 checkGPSAndProceed(this) {
-                    initLocation()
+                    isNetworkAvailable(this) {
+                        initLocation()
+                    }
                 }
             }
         }
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

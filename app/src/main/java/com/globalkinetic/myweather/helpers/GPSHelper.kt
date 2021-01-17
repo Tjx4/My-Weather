@@ -30,7 +30,7 @@ fun checkGPSAndProceed(context: Context, onSuccessCallback: () -> Unit = {}) {
             context.getString(R.string.gps_error_message),
             context.getString(R.string.try_again)
         ) {
-            checkGPSAndProceed(context)
+            checkGPSAndProceed(context, onSuccessCallback)
         }
     }
 }

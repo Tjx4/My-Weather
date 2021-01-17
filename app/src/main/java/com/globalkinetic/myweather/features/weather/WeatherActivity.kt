@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -337,6 +338,15 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.dashboard_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true)
+            return super.onKeyDown(keyCode, event)
+        }
+
+        return true
     }
 
 }

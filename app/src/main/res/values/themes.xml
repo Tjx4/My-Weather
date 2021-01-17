@@ -70,5 +70,6 @@
         <item name="android:paddingBottom">@dimen/large_margin</item>
         <item name="android:paddingLeft">@dimen/small_margin</item>
         <item name="android:paddingRight">@dimen/small_margin</item>
+        <item name="android:focusableInTouchMode">true</item>
     </style>
 </resources>

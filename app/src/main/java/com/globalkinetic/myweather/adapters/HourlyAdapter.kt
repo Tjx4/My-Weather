@@ -22,11 +22,11 @@ class HourlyAdapter(context: Context, private val hourly: List<Current>?) : Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val searchType = hourly?.get(position)
+        val weather = hourly?.get(position)
 
-        holder.nameTv.text = getFormatedTime(searchType?.dt ?: 0)
-        holder.cloudsTv.text =   "${searchType?.clouds ?: 0}%"
-        holder.tempTv.text = "${fahrenheitToCelsius(searchType?.temp ?: 0.0)}"
+        holder.nameTv.text = getFormatedTime(weather?.dt ?: 0)
+        holder.cloudsTv.text =   "${weather?.clouds ?: 0}%"
+        holder.tempTv.text = "${fahrenheitToCelsius(weather?.temp ?: 0.0)}"
     }
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),

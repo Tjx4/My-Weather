@@ -58,9 +58,9 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
         addObservers()
 
-        setSupportActionBar(toolbar)
-
         checkPlayServicesAndPermission()
+
+        setSupportActionBar(toolbar)
     }
 
     fun isGPSOn(): Boolean {

@@ -1,4 +1,4 @@
-package com.globalkinetic.myweather.helpers
+package com.globalkinetic.myweather.networking
 
 import com.globalkinetic.myweather.constants.HOST
 import retrofit2.Retrofit

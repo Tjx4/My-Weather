@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.globalkinetic.myweather.database.WeatherDB
-import com.globalkinetic.myweather.helpers.MyApi
+import com.globalkinetic.myweather.networking.MyApi
 import com.globalkinetic.myweather.repositories.WeatherRepository
 import java.lang.IllegalArgumentException
 

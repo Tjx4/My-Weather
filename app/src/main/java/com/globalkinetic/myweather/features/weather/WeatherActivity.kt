@@ -70,6 +70,30 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        for (i in permissions.indices) {
+            val permission = permissions[i]
+            val grantResult = grantResults[i]
+
+            if (permission == Manifest.permission.ACCESS_FINE_LOCATION) {
+                if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                    checkGPSAndProceed(this){
+                        initLocation()
+                    }
+                } else {
+                    onLocationPermissionDenied()
+                }
+            }
+        }
+    }
+
     fun initLocation() {
         locationRequest = LocationRequest()
         locationRequest?.interval = 20000
@@ -131,27 +155,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     override fun onLocationChanged(location: Location?) {
 
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        for (i in permissions.indices) {
-            val permission = permissions[i]
-            val grantResult = grantResults[i]
-
-            if (permission == Manifest.permission.ACCESS_FINE_LOCATION) {
-                if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                    checkGPSAndProceed(this)
-                } else {
-                    onLocationPermissionDenied()
-                }
-            }
-        }
     }
 
     fun onLocationPermissionDenied() {

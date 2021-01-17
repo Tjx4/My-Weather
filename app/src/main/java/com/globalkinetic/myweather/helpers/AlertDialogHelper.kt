@@ -6,7 +6,16 @@ import android.content.DialogInterface
 import android.view.Window
 import com.globalkinetic.myweather.R
 
-fun showErrorAlert(context: Context, title: String, message: String, buttonText: String = "Ok", callbackFun: () -> Unit = {}){
+fun showConfirmDialog(context: Context, title: String, message: String, yesButtonText: String, noButtonText: String, yesCallbackFun: () -> Unit, noCallbackFun: () -> Unit){
+    val ab = setupBasicMessage(title, message, yesButtonText, "", noButtonText, yesCallbackFun,
+        { }, noCallbackFun, context
+    )
+    ab.setIcon(R.drawable.confirm_icon)
+    ab.setCancelable(false)
+    showAlertMessage(ab, context)
+}
+
+fun showErrorDialog(context: Context, title: String, message: String, buttonText: String = "Ok", callbackFun: () -> Unit = {}){
     val ab = setupBasicMessage(title, message, buttonText, "", "", callbackFun, {}, {}, context)
     ab.setIcon(R.drawable.error_icon)
     ab.setCancelable(false)

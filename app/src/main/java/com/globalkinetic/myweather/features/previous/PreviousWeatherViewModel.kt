@@ -21,10 +21,6 @@ class PreviousWeatherViewModel(application: Application, private val weatherRepo
     val isNoPrevious: MutableLiveData<Boolean>
         get() = _isNoPrevious
 
-    init {
-        getPreviousWeatherReports()
-    }
-
     fun getPreviousWeatherReports(){
         _showLoading.value = true
 

@@ -36,6 +36,8 @@ class PreviousWeatherActivity : BaseChildActivity(),
 
         toolbar?.setNavigationOnClickListener { onBackPressed() }
         setSupportActionBar(toolbar)
+
+        previousWeatherViewModel.getPreviousWeatherReports()
     }
 
     private fun addObservers() {

@@ -28,5 +28,5 @@
     <string name="cancel">Cancel</string>
     <string name="proceed">Proceed</string>
     <string name="confirm">Confirm</string>
-    <string name="add_weather_confirm_message">You are about to save the current weather report to your previous list, would you like to proceed?</string>
+    <string name="add_weather_confirm_message">You are about to add the current weather report to your previous list, would you like to proceed?</string>
 </resources>

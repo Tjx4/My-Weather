@@ -72,4 +72,8 @@
         <item name="android:paddingRight">@dimen/small_margin</item>
         <item name="android:focusableInTouchMode">true</item>
     </style>
+
+    <style name="ParentCoordinatorLayout">
+        <item name="android:background">@drawable/splash_background_gradient</item>
+    </style>
 </resources>

@@ -13,12 +13,12 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+            style="@style/ParentCoordinatorLayout"
             android:id="@+id/clBody"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:animateLayoutChanges="true"
-            android:background="@drawable/splash_background_gradient"
             tools:context=".features.weather.WeatherActivity">
 
             <com.google.android.material.appbar.AppBarLayout

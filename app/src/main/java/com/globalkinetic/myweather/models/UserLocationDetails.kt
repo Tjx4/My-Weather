@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class UserLocation(
+data class UserLocationDetails(
     var name: String?,
     var description: String?,
     var coordinates: LatLng?,

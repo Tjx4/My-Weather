@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,7 +23,7 @@ import com.globalkinetic.myweather.extensions.navigateToActivity
 import com.globalkinetic.myweather.features.previous.PreviousWeatherActivity
 import com.globalkinetic.myweather.helpers.*
 import com.globalkinetic.myweather.models.Current
-import com.globalkinetic.myweather.models.UserLocation
+import com.globalkinetic.myweather.models.UserLocationDetails
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
@@ -154,7 +153,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun addObservers() {
-        weatherViewModel.currentLocation.observe(this, Observer { onCurrentLocationSet(it) })
+        weatherViewModel.currentLocationDetails.observe(this, Observer { onCurrentLocationSet(it) })
         weatherViewModel.isLocationError.observe(this, Observer { onLocationError(it) })
         weatherViewModel.isWeatherError.observe(this, Observer { onWeatherError(it) })
         weatherViewModel.showLoading.observe(this, Observer { onShowLoading(it) })
@@ -164,8 +163,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         weatherViewModel.dbError.observe(this, Observer { onSqlitDbError(it) })
     }
 
-    private fun onCurrentLocationSet(location: UserLocation) {
-        weatherViewModel.getAndSetWeather(location)
+    private fun onCurrentLocationSet(locationDetails: UserLocationDetails) {
+        weatherViewModel.getAndSetWeather(locationDetails)
     }
 
     private fun onShowLoading(isBusy: Boolean) {
@@ -193,7 +192,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
             getString(R.string.weather_error),
             getString(R.string.try_again)
         ) {
-            weatherViewModel.currentLocation.value?.let { weatherViewModel.getAndSetWeather(it) }
+            weatherViewModel.currentLocationDetails.value?.let { weatherViewModel.getAndSetWeather(it) }
         }
     }
 

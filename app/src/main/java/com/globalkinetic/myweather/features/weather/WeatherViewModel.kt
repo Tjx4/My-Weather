@@ -9,7 +9,7 @@ import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
 import com.globalkinetic.myweather.helpers.getCurrentLocation
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.Current
-import com.globalkinetic.myweather.models.UserLocation
+import com.globalkinetic.myweather.models.UserLocationDetails
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
@@ -51,9 +51,9 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val hourly: MutableLiveData<List<Current>?>
         get() = _hourly
 
-    private val _currentLocation: MutableLiveData<UserLocation> = MutableLiveData()
-    val currentLocation: MutableLiveData<UserLocation>
-        get() = _currentLocation
+    private val _userLocationDetails: MutableLiveData<UserLocationDetails> = MutableLiveData()
+    val currentLocationDetails: MutableLiveData<UserLocationDetails>
+        get() = _userLocationDetails
 
     private val _description: MutableLiveData<String> = MutableLiveData()
     val description: MutableLiveData<String>
@@ -76,21 +76,30 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
         _showLoading.value = true
 
         ioScope.launch {
-            val currentLocation = getCurrentLocation(LatLng(location.latitude, location.longitude), app)
-
+            val userLocationDetails = getUserLocationDetails(location)
             uiScope.launch {
-                val userCoordinates = LatLng(location?.latitude, location?.longitude)
-                val userLocation = UserLocation(currentLocation, "", userCoordinates, "")
-
-                _currentLocation.value = userLocation
+                _userLocationDetails.value = userLocationDetails
             }
         }
 
     }
 
-    fun getAndSetWeather(location: UserLocation){
+    suspend fun getUserLocationDetails(location: Location?): UserLocationDetails? {
+        location?.let {
+            val lat  = location?.latitude
+            val lon  = location?.longitude
+            val currentLocation = getCurrentLocation(LatLng(lat, lon), app)
+
+            val userCoordinates = LatLng(lat, lon)
+            return UserLocationDetails(currentLocation, "", userCoordinates, "")
+        }
+
+        return null
+    }
+
+    fun getAndSetWeather(locationDetails: UserLocationDetails){
         _showLoading.value = true
-        var currentCoordinates = _currentLocation.value?.coordinates ?: LatLng(0.0, 0.0)
+        var currentCoordinates = _userLocationDetails.value?.coordinates ?: LatLng(0.0, 0.0)
 
         ioScope.launch {
             var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
@@ -98,7 +107,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
             uiScope.launch {
                 if(weather != null){
                     _weather.value = weather
-                    _weather.value?.locationName = _currentLocation.value?.name
+                    _weather.value?.locationName = _userLocationDetails.value?.name
                     _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
                     _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
                     _description.value = weather?.current?.weather?.get(0)?.description ?: ""

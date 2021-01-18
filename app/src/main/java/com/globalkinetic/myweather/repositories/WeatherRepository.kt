@@ -8,7 +8,7 @@ import com.globalkinetic.myweather.models.DbOperation
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.maps.model.LatLng
 
-class WeatherRepository(private val retrofitHelper: RetrofitHelper, private val weatherDB: WeatherDB) {
+open class WeatherRepository(private val retrofitHelper: RetrofitHelper, private val weatherDB: WeatherDB) {
 
     suspend fun getWeather(apiKey: String, latLng: LatLng) : Weather? {
         return try {

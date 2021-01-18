@@ -15,7 +15,7 @@ import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(
+class WeatherViewModel(application: Application,  val weatherRepository: WeatherRepository) : BaseVieModel(
     application
 ) {
 
@@ -67,6 +67,19 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val currentDateTime: MutableLiveData<String>
         get() = _currentDateTime
 
+
+    fun getUserLocationDetails(location: Location?): UserLocationDetails? {
+        location?.let {
+            val lat  = location?.latitude
+            val lon  = location?.longitude
+            val currentLocation = getCurrentLocation(LatLng(lat, lon), app)
+
+            return UserLocationDetails(currentLocation, "", LatLng(lat, lon), "")
+        }
+
+        return null
+    }
+
     fun checkAndSetLocation(location: Location?) {
         if (location == null) {
             _isLocationError.value = true
@@ -75,26 +88,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
 
         _showLoading.value = true
 
-        ioScope.launch {
-            val userLocationDetails = getUserLocationDetails(location)
-            uiScope.launch {
-                _userLocationDetails.value = userLocationDetails
-            }
-        }
-
-    }
-
-    suspend fun getUserLocationDetails(location: Location?): UserLocationDetails? {
-        location?.let {
-            val lat  = location?.latitude
-            val lon  = location?.longitude
-            val currentLocation = getCurrentLocation(LatLng(lat, lon), app)
-
-            val userCoordinates = LatLng(lat, lon)
-            return UserLocationDetails(currentLocation, "", userCoordinates, "")
-        }
-
-        return null
+        _userLocationDetails.value = getUserLocationDetails(location)
     }
 
     fun getAndSetWeather(locationDetails: UserLocationDetails){

@@ -13,6 +13,6 @@
     </style>
 
     <style name="ParentCoordinatorLayout" >
-        <item name="android:background">@color/splashGradientEnd</item>
+        <item name="android:background">@drawable/splash_background_gradient</item>
     </style>
 </resources>

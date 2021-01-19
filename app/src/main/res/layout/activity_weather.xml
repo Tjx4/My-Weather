@@ -69,7 +69,7 @@
                             <TextView
                                 style="@style/MediumLightTextView"
                                 tools:text="Location"
-                                android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.currentLocationDetails.name , `Unknown`)}"
+                                android:text="@{nullToDefaultConverterKt.nullToDefValue(weatherViewModel.userLocationDetails.name , `Unknown`)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textStyle="bold"

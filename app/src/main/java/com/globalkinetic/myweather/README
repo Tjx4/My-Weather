@@ -1,0 +1,10 @@
+Weather app
+
+Current weather:
+The current weather screen demonstrates the use of retrofit to get api json data and map it to specific  fields of the screen, it also included a coordinator layout to make the UI for nicely
+
+Add current to previous:
+This functionality is accessed by clicking the + button on the top right of the weather screen, it demonstrates the use of alert dialog box to confirm user action and also showing a toast to confirm successful action
+
+Previous weather list:
+This functionality is accessed by clicking the 3 dot menu on the top left of the screen, it demonstrates the use of Room sqlite library I included functionality to Add your current weather report to a previous weather reports list, all saved weather reports will be saved in an sqlite database using Room and they will be fetched and displayed from the sqlite database

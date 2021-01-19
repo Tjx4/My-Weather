@@ -15,7 +15,7 @@ import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(application: Application,  val weatherRepository: WeatherRepository) : BaseVieModel(
+class WeatherViewModel(application: Application, val weatherRepository: WeatherRepository) : BaseVieModel(
     application
 ) {
 
@@ -52,7 +52,7 @@ class WeatherViewModel(application: Application,  val weatherRepository: Weather
         get() = _hourly
 
     private val _userLocationDetails: MutableLiveData<UserLocationDetails> = MutableLiveData()
-    val currentLocationDetails: MutableLiveData<UserLocationDetails>
+    val userLocationDetails: MutableLiveData<UserLocationDetails>
         get() = _userLocationDetails
 
     private val _description: MutableLiveData<String> = MutableLiveData()
@@ -67,33 +67,19 @@ class WeatherViewModel(application: Application,  val weatherRepository: Weather
     val currentDateTime: MutableLiveData<String>
         get() = _currentDateTime
 
-
-    fun getUserLocationDetails(location: Location?): UserLocationDetails? {
-        location?.let {
-            val lat  = location?.latitude
-            val lon  = location?.longitude
-            val currentLocation = getCurrentLocation(LatLng(lat, lon), app)
-
-            return UserLocationDetails(currentLocation, "", LatLng(lat, lon), "")
-        }
-
-        return null
-    }
-
-    fun checkAndSetLocation(location: Location?) {
-        if (location == null) {
+    fun checkAndSetLocation(userLocationDetails: UserLocationDetails?) {
+        if (userLocationDetails == null) {
             _isLocationError.value = true
             return
         }
 
-        _showLoading.value = true
-
-        _userLocationDetails.value = getUserLocationDetails(location)
+        _userLocationDetails.value = userLocationDetails
     }
 
-    fun getAndSetWeather(locationDetails: UserLocationDetails){
+    fun getLocationWeather(locationDetails: UserLocationDetails){
         _showLoading.value = true
-        var currentCoordinates = _userLocationDetails.value?.coordinates ?: LatLng(0.0, 0.0)
+
+        var currentCoordinates = locationDetails.coordinates ?: LatLng(0.0, 0.0)
 
         ioScope.launch {
             var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
@@ -126,23 +112,24 @@ class WeatherViewModel(application: Application,  val weatherRepository: Weather
         }
     }
 
-    fun addWeatherToPreviousList() {
-        weather?.let {
-            ioScope.launch {
-                _weather.value?.let {
-                    var addWeather = weatherRepository.addToPreviousWeatherReports(it)
-
-                    uiScope.launch {
-                        if (addWeather.isSuccessful){
-                            _isWeatherAdded.value = true
-                        }
-                        else{
-                            _dbError.value = addWeather.errorMessage
-                        }
-                    }
-                }
-            }
+    fun checkAndAddWeatherToPreviousList() {
+        _weather?.value?.let {
+            addWeatherToPreviousList(it)
         }
+    }
+
+    fun addWeatherToPreviousList(weather: Weather) {
+      ioScope.launch {
+          var addWeather = weatherRepository.addToPreviousWeatherReports(weather)
+
+          uiScope.launch {
+              if (addWeather.isSuccessful) {
+                  _isWeatherAdded.value = true
+              } else {
+                  _dbError.value = addWeather.errorMessage
+              }
+          }
+      }
     }
 
 }

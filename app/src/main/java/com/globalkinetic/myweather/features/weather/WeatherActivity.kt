@@ -27,6 +27,7 @@ import com.globalkinetic.myweather.models.UserLocationDetails
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_weather.*
 
 
@@ -130,8 +131,16 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-    fun onLocationRequestListenerSuccess(location: Location?) {
-        weatherViewModel.checkAndSetLocation(location)
+    private fun onLocationRequestListenerSuccess(location: Location?) {
+        location?.let {
+            val lat  = location.latitude
+            val lon  = location.longitude
+            val currentLocation = getCurrentLocation(LatLng(lat, lon), this)
+
+            val userLocation = UserLocationDetails(currentLocation, "", LatLng(lat, lon), "")
+
+            weatherViewModel.checkAndSetLocation(userLocation)
+        }
     }
 
     override fun onLocationChanged(location: Location?) {
@@ -153,7 +162,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun addObservers() {
-        weatherViewModel.currentLocationDetails.observe(this, Observer { onCurrentLocationSet(it) })
+        weatherViewModel.userLocationDetails.observe(this, Observer { onCurrentLocationSet(it) })
         weatherViewModel.isLocationError.observe(this, Observer { onLocationError(it) })
         weatherViewModel.isWeatherError.observe(this, Observer { onWeatherError(it) })
         weatherViewModel.showLoading.observe(this, Observer { onShowLoading(it) })
@@ -164,7 +173,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun onCurrentLocationSet(locationDetails: UserLocationDetails) {
-        weatherViewModel.getAndSetWeather(locationDetails)
+        weatherViewModel.getLocationWeather(locationDetails)
     }
 
     private fun onShowLoading(isBusy: Boolean) {
@@ -192,7 +201,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
             getString(R.string.weather_error),
             getString(R.string.try_again)
         ) {
-            weatherViewModel.currentLocationDetails.value?.let { weatherViewModel.getAndSetWeather(it) }
+            weatherViewModel.userLocationDetails.value?.let { weatherViewModel.getLocationWeather(it) }
         }
     }
 
@@ -242,7 +251,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
                     getString(R.string.add_weather_confirm_message),
                     getString(R.string.proceed),
                     getString(R.string.cancel), {
-                        weatherViewModel.addWeatherToPreviousList()
+                        weatherViewModel.checkAndAddWeatherToPreviousList()
 
                     }, {
 

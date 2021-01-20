@@ -14,7 +14,11 @@ import com.globalkinetic.myweather.networking.RetrofitHelper
 import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
 import com.nhaarman.mockitokotlin2.whenever
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -76,19 +80,22 @@ class WeatherUnitTest  {
 
     @Test
     fun `test get weather`() = runBlocking {
-        val weather: Weather? = Weather(
-            "",
-            Current(null, 0, 0, 0.0, 0, 0.0, 0.0, 0.0, 0.0),
-            ArrayList(),
-            ArrayList(),
-            "Some location"
-        )
-        var currentCoordinates = LatLng(0.0, 0.0)
 
-        whenever(weatherRepository.getWeather(API_KEY, currentCoordinates)).thenReturn(weather)
-        weatherViewModel.getWeatherReport(currentCoordinates)
+            val weather: Weather? = Weather(
+                    "",
+                    Current(null, 0, 0, 0.0, 0, 0.0, 0.0, 0.0, 0.0),
+                    ArrayList(),
+                    ArrayList(),
+                    "Some location"
+            )
+            var currentCoordinates = LatLng(0.0, 0.0)
 
-        assertEquals(weatherViewModel.weather.value, weather)
+
+            whenever(weatherRepository.getWeather(API_KEY, currentCoordinates)).thenReturn(weather)
+            weatherViewModel.getWeatherReport(currentCoordinates)
+
+
+            assertEquals(weather, weatherViewModel.weather.value)
     }
 
     @Test

@@ -90,29 +90,31 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
 
         var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
 
+        uiScope.launch {
+            if (weather != null) {
+                _weather.value = weather
+                _weather.value?.locationName = _userLocationDetails.value?.name
+                _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
+                _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
+                _description.value = weather?.current?.weather?.get(0)?.description ?: ""
 
-        if (weather != null) {
-            _weather.value = weather
-            _weather.value?.locationName = _userLocationDetails.value?.name
-            _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
-            _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
-            _description.value = weather?.current?.weather?.get(0)?.description ?: ""
-
-            weather?.daily?.let {
-                if (it.isNotEmpty()) {
-                    _precipitation.value = "${it[0]?.pop ?: 0}"
+                weather?.daily?.let {
+                    if (it.isNotEmpty()) {
+                        _precipitation.value = "${it[0]?.pop ?: 0}"
+                    }
                 }
-            }
 
-            weather?.hourly?.let {
-                if (it.isNotEmpty()) {
-                    _hourly.value = it
+                weather?.hourly?.let {
+                    if (it.isNotEmpty()) {
+                        _hourly.value = it
+                    }
                 }
-            }
 
-        } else {
-            _isWeatherError.value = true
+            } else {
+                _isWeatherError.value = true
+            }
         }
+
     }
 
     fun checkAndAddWeatherToPreviousList() {
@@ -127,10 +129,12 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
 
         var addWeather = weatherRepository.addToPreviousWeatherReports(weather)
 
-        if (addWeather.isSuccessful) {
-            _isWeatherAdded.value = true
-        } else {
-            _dbError.value = addWeather.errorMessage
+        uiScope.launch {
+            if (addWeather.isSuccessful) {
+                _isWeatherAdded.value = true
+            } else {
+                _dbError.value = addWeather.errorMessage
+            }
         }
     }
 

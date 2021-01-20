@@ -26,7 +26,6 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class WeatherUnitTest  {
-
     lateinit var weatherViewModel: WeatherViewModel
 
     @Mock
@@ -114,7 +113,7 @@ class WeatherUnitTest  {
         )
 
         whenever(weatherRepository.addToPreviousWeatherReports(weather)).then{
-            weatherViewModel.isWeatherAdded.value = true;
+            weatherViewModel.isWeatherAdded.value = true
             DbOperation(true, "")
         }
         weatherViewModel.addWeatherToPreviousList(weather)

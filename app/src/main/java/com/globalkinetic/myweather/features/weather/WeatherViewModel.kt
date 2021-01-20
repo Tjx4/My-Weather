@@ -76,60 +76,62 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
         _userLocationDetails.value = userLocationDetails
     }
 
-    fun getLocationWeather(locationDetails: UserLocationDetails){
+    fun showLoaderAndGetWeather(locationDetails: UserLocationDetails){
         _showLoading.value = true
 
         var currentCoordinates = locationDetails.coordinates ?: LatLng(0.0, 0.0)
 
         ioScope.launch {
-            var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
+            getWeatherReport(currentCoordinates)
+        }
+    }
 
-            uiScope.launch {
-                if(weather != null){
-                    _weather.value = weather
-                    _weather.value?.locationName = _userLocationDetails.value?.name
-                    _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
-                    _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
-                    _description.value = weather?.current?.weather?.get(0)?.description ?: ""
+    suspend fun getWeatherReport(currentCoordinates: LatLng) {
 
-                    weather?.daily?.let {
-                        if(it.isNotEmpty()){
-                            _precipitation.value = "${it[0]?.pop ?: 0}"
-                        }
-                    }
+        var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
 
-                    weather?.hourly?.let {
-                        if(it.isNotEmpty()){
-                            _hourly.value = it
-                        }
-                    }
 
-                }
-                else{
-                    _isWeatherError.value = true
+        if (weather != null) {
+            _weather.value = weather
+            _weather.value?.locationName = _userLocationDetails.value?.name
+            _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
+            _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
+            _description.value = weather?.current?.weather?.get(0)?.description ?: ""
+
+            weather?.daily?.let {
+                if (it.isNotEmpty()) {
+                    _precipitation.value = "${it[0]?.pop ?: 0}"
                 }
             }
+
+            weather?.hourly?.let {
+                if (it.isNotEmpty()) {
+                    _hourly.value = it
+                }
+            }
+
+        } else {
+            _isWeatherError.value = true
         }
     }
 
     fun checkAndAddWeatherToPreviousList() {
         _weather?.value?.let {
-            addWeatherToPreviousList(it)
+            ioScope.launch {
+                addWeatherToPreviousList(it)
+            }
         }
     }
 
-    fun addWeatherToPreviousList(weather: Weather) {
-      ioScope.launch {
-          var addWeather = weatherRepository.addToPreviousWeatherReports(weather)
+    suspend fun addWeatherToPreviousList(weather: Weather) {
 
-          uiScope.launch {
-              if (addWeather.isSuccessful) {
-                  _isWeatherAdded.value = true
-              } else {
-                  _dbError.value = addWeather.errorMessage
-              }
-          }
-      }
+        var addWeather = weatherRepository.addToPreviousWeatherReports(weather)
+
+        if (addWeather.isSuccessful) {
+            _isWeatherAdded.value = true
+        } else {
+            _dbError.value = addWeather.errorMessage
+        }
     }
 
 }

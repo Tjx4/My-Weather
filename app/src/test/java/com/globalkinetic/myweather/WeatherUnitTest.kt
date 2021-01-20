@@ -1,13 +1,11 @@
 package com.globalkinetic.myweather
 
 import android.app.Application
-import android.content.Context
 import android.location.Location
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.database.WeatherDB
 import com.globalkinetic.myweather.features.weather.WeatherViewModel
-import com.globalkinetic.myweather.helpers.getCurrentLocation
 import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.DbOperation
 import com.globalkinetic.myweather.models.UserLocationDetails
@@ -23,8 +21,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 
 
@@ -48,7 +44,8 @@ class WeatherUnitTest  {
 
     @Before
     fun setUp() {
-        weatherRepository = WeatherRepository(retrofitHelper, weatherDB)
+        weatherRepository.retrofitHelper = retrofitHelper
+        weatherRepository.weatherDB = weatherDB
         weatherViewModel = WeatherViewModel(application, weatherRepository)
     }
 
@@ -88,10 +85,9 @@ class WeatherUnitTest  {
             "Some location"
         )
         var currentCoordinates = LatLng(0.0, 0.0)
-        val userLocationDetails = UserLocationDetails("Some location", "", currentCoordinates, "")
 
         whenever(weatherRepository.getWeather(API_KEY, currentCoordinates)).thenReturn(weather)
-        weatherViewModel.getLocationWeather(userLocationDetails)
+        weatherViewModel.getWeatherReport(currentCoordinates)
 
         assertEquals(weatherViewModel.weather.value, weather)
     }
@@ -100,10 +96,9 @@ class WeatherUnitTest  {
     fun `test get weather fail`() = runBlocking {
         val weather: Weather? = null
         var currentCoordinates = LatLng(0.0, 0.0)
-        val userLocationDetails = UserLocationDetails("Some location", "", currentCoordinates, "")
 
         whenever(weatherRepository.getWeather(API_KEY, currentCoordinates)).thenReturn(weather)
-        weatherViewModel.getLocationWeather(userLocationDetails)
+        weatherViewModel.getWeatherReport(currentCoordinates)
 
         assertEquals(weatherViewModel.weather.value, null)
     }
@@ -118,15 +113,13 @@ class WeatherUnitTest  {
             "Some location"
         )
 
-        whenever(weatherRepository.addToPreviousWeatherReports(weather)).thenReturn(
-            DbOperation(
-                true,
-                ""
-            )
-        )
-        val result = weatherViewModel.addWeatherToPreviousList(weather)
+        whenever(weatherRepository.addToPreviousWeatherReports(weather)).then{
+            weatherViewModel.isWeatherAdded.value = true;
+            DbOperation(true, "")
+        }
+        weatherViewModel.addWeatherToPreviousList(weather)
 
-        assert(weatherViewModel.isWeatherAdded.value!!)
+        assertEquals(true, weatherViewModel.isWeatherAdded.value)
     }
 
 }

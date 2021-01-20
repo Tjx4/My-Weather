@@ -173,7 +173,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
     }
 
     private fun onCurrentLocationSet(locationDetails: UserLocationDetails) {
-        weatherViewModel.getLocationWeather(locationDetails)
+        weatherViewModel.showLoaderAndGetWeather(locationDetails)
     }
 
     private fun onShowLoading(isBusy: Boolean) {
@@ -201,7 +201,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
             getString(R.string.weather_error),
             getString(R.string.try_again)
         ) {
-            weatherViewModel.userLocationDetails.value?.let { weatherViewModel.getLocationWeather(it) }
+            weatherViewModel.userLocationDetails.value?.let { weatherViewModel.showLoaderAndGetWeather(it) }
         }
     }
 

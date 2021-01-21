@@ -90,8 +90,7 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
         }
     }
 
-    suspend fun setWeatherReport(weather: Weather?) {
-
+    fun setWeatherReport(weather: Weather?) {
             if (weather != null) {
                 _weather.value = weather
                 _weather.value?.locationName = _userLocationDetails.value?.name

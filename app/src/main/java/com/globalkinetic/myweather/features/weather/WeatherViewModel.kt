@@ -1,14 +1,13 @@
 package com.globalkinetic.myweather.features.weather
 
 import android.app.Application
-import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
-import com.globalkinetic.myweather.helpers.getCurrentLocation
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.Current
+import com.globalkinetic.myweather.models.DbOperation
 import com.globalkinetic.myweather.models.UserLocationDetails
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
@@ -82,15 +81,17 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
         var currentCoordinates = locationDetails.coordinates ?: LatLng(0.0, 0.0)
 
         ioScope.launch {
-            getWeatherReport(currentCoordinates)
+
+            var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
+
+            uiScope.launch {
+                setWeatherReport(weather)
+            }
         }
     }
 
-    suspend fun getWeatherReport(currentCoordinates: LatLng) {
+    suspend fun setWeatherReport(weather: Weather?) {
 
-        var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
-
-        uiScope.launch {
             if (weather != null) {
                 _weather.value = weather
                 _weather.value?.locationName = _userLocationDetails.value?.name
@@ -113,28 +114,25 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
             } else {
                 _isWeatherError.value = true
             }
-        }
-
     }
 
     fun checkAndAddWeatherToPreviousList() {
         _weather?.value?.let {
             ioScope.launch {
-                addWeatherToPreviousList(it)
+                var addWeather = weatherRepository.addToPreviousWeatherReports(it)
+
+                uiScope.launch {
+                    checkIsWeatherAddSuccessful(addWeather)
+                }
             }
         }
     }
 
-    suspend fun addWeatherToPreviousList(weather: Weather) {
-
-        var addWeather = weatherRepository.addToPreviousWeatherReports(weather)
-
-        uiScope.launch {
-            if (addWeather.isSuccessful) {
-                _isWeatherAdded.value = true
-            } else {
-                _dbError.value = addWeather.errorMessage
-            }
+     fun checkIsWeatherAddSuccessful(dbOperation: DbOperation) {
+        if (dbOperation.isSuccessful) {
+            _isWeatherAdded.value = true
+        } else {
+            _dbError.value = dbOperation.errorMessage
         }
     }
 

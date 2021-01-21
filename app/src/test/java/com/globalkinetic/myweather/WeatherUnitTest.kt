@@ -15,10 +15,6 @@ import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.*
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -79,7 +75,7 @@ class WeatherUnitTest  {
     }
 
     @Test
-    fun `test get weather`() = runBlocking {
+    fun `test set weather`() = runBlocking {
 
             val weather: Weather? = Weather(
                     "",
@@ -88,11 +84,8 @@ class WeatherUnitTest  {
                     ArrayList(),
                     "Some location"
             )
-            var currentCoordinates = LatLng(0.0, 0.0)
 
-
-            whenever(weatherRepository.getWeather(API_KEY, currentCoordinates)).thenReturn(weather)
-            weatherViewModel.getWeatherReport(currentCoordinates)
+            weatherViewModel.setWeatherReport(weather)
 
 
             assertEquals(weather, weatherViewModel.weather.value)
@@ -104,26 +97,31 @@ class WeatherUnitTest  {
         var currentCoordinates = LatLng(0.0, 0.0)
 
         whenever(weatherRepository.getWeather(API_KEY, currentCoordinates)).thenReturn(weather)
-        weatherViewModel.getWeatherReport(currentCoordinates)
+        weatherViewModel.setWeatherReport(weather)
 
         assertEquals(weatherViewModel.weather.value, null)
     }
 
     @Test
     fun `test add weather to previous list`() = runBlocking {
-        val weather = Weather(
-            "",
-            Current(null, 0, 0, 0.0, 0, 0.0, 0.0, 0.0, 0.0),
-            ArrayList(),
-            ArrayList(),
-            "Some location"
-        )
 
-        whenever(weatherRepository.addToPreviousWeatherReports(weather)).then{
-            weatherViewModel.isWeatherAdded.value = true
-            DbOperation(true, "")
-        }
-        weatherViewModel.addWeatherToPreviousList(weather)
+        val dbOperation = DbOperation(true, "")
+        /*
+             val weather = Weather(
+                 "",
+                 Current(null, 0, 0, 0.0, 0, 0.0, 0.0, 0.0, 0.0),
+                 ArrayList(),
+                 ArrayList(),
+                 "Some location"
+             )
+
+
+             whenever(weatherRepository.addToPreviousWeatherReports(weather)).then{
+                 weatherViewModel.isWeatherAdded.value = true
+                 DbOperation(true, "")
+             }
+         */
+        weatherViewModel.checkIsWeatherAddSuccessful(dbOperation)
 
         assertEquals(true, weatherViewModel.isWeatherAdded.value)
     }

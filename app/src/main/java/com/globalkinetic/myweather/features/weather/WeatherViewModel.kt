@@ -127,7 +127,7 @@ class WeatherViewModel(application: Application, val weatherRepository: WeatherR
         }
     }
 
-     fun checkIsWeatherAddSuccessful(dbOperation: DbOperation) {
+    fun checkIsWeatherAddSuccessful(dbOperation: DbOperation) {
         if (dbOperation.isSuccessful) {
             _isWeatherAdded.value = true
         } else {

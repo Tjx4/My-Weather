@@ -1,7 +1,7 @@
 package com.globalkinetic.myweather.extensions
 
 import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
-import com.globalkinetic.myweather.database.tables.PreviousWeatherTable
+import com.globalkinetic.myweather.persistance.room.tables.PreviousWeatherTable
 import com.globalkinetic.myweather.helpers.getFormatedDate
 import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.Weather

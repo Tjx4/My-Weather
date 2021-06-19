@@ -1,11 +1,11 @@
-package com.globalkinetic.myweather.database
+package com.globalkinetic.myweather.persistance.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.globalkinetic.myweather.database.tables.PreviousWeatherDAO
-import com.globalkinetic.myweather.database.tables.PreviousWeatherTable
+import com.globalkinetic.myweather.persistance.room.tables.PreviousWeatherDAO
+import com.globalkinetic.myweather.persistance.room.tables.PreviousWeatherTable
 
 @Database(entities = [PreviousWeatherTable::class], version = 1, exportSchema = false)
 abstract class WeatherDB : RoomDatabase() {

@@ -50,8 +50,8 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         binding.lifecycleOwner = this
 
         addObservers()
-        initActivity()
         setSupportActionBar(toolbar)
+
         checkPlayServicesAndPermission()
     }
 
@@ -90,16 +90,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-    fun initActivity() {
-        locationRequest = LocationRequest()
-        locationRequest?.interval = 20000
-        locationRequest?.fastestInterval = 1000
-        locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-
-        val snapHelper: SnapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(rvHourly)
-    }
-
     fun initLocation() {
         val fusedLocationClient = getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -130,18 +120,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-    private fun onLocationRequestListenerSuccess(location: Location?) {
-        location?.let {
-            val lat  = location.latitude
-            val lon  = location.longitude
-            val currentLocation = getCurrentLocation(LatLng(lat, lon), this)
-
-            val userLocation = UserLocationDetails(currentLocation, "", LatLng(lat, lon), "")
-
-            weatherViewModel.checkAndSetLocation(userLocation)
-        }
-    }
-
     override fun onLocationChanged(location: Location?) {
 
     }
@@ -158,6 +136,38 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         ) {
             finish()
         }
+    }
+
+
+
+
+
+
+
+
+
+    private fun onLocationRequestListenerSuccess(location: Location?) {
+        initActivity()
+
+        location?.let {
+            val lat  = location.latitude
+            val lon  = location.longitude
+            val currentLocation = getCurrentLocation(LatLng(lat, lon), this)
+
+            val userLocation = UserLocationDetails(currentLocation, "", LatLng(lat, lon), "")
+
+            weatherViewModel.checkAndSetLocation(userLocation)
+        }
+    }
+
+    fun initActivity() {
+        locationRequest = LocationRequest()
+        locationRequest?.interval = 20000
+        locationRequest?.fastestInterval = 1000
+        locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(rvHourly)
     }
 
     private fun addObservers() {

@@ -1,4 +1,4 @@
-package com.globalkinetic.myweather.database.tables
+package com.globalkinetic.myweather.persistance.room.tables
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -30,5 +30,4 @@ data class PreviousWeatherTable (
     var pop:Double = 0.0,
     @ColumnInfo(name = "uv")
     var uv:Double = 0.0,
-
 ): Parcelable

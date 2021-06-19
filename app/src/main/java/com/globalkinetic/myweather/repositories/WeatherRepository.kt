@@ -1,6 +1,6 @@
 package com.globalkinetic.myweather.repositories
 
-import com.globalkinetic.myweather.database.WeatherDB
+import com.globalkinetic.myweather.persistance.room.WeatherDB
 import com.globalkinetic.myweather.extensions.toWeather
 import com.globalkinetic.myweather.extensions.toWeatherTable
 import com.globalkinetic.myweather.networking.RetrofitHelper

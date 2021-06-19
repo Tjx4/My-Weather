@@ -14,10 +14,9 @@ import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(application: Application, val weatherRepository: WeatherRepository) : BaseVieModel(
+class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(
     application
 ) {
-
     private var _showLoading: MutableLiveData<Boolean> = MutableLiveData()
     val showLoading: MutableLiveData<Boolean>
         get() = _showLoading

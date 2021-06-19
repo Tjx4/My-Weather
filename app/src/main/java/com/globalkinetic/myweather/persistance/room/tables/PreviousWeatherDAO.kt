@@ -1,4 +1,4 @@
-package com.globalkinetic.myweather.database.tables
+package com.globalkinetic.myweather.persistance.room.tables
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

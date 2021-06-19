@@ -4,7 +4,7 @@ import android.app.Application
 import android.location.Location
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.globalkinetic.myweather.constants.API_KEY
-import com.globalkinetic.myweather.database.WeatherDB
+import com.globalkinetic.myweather.persistance.room.WeatherDB
 import com.globalkinetic.myweather.features.weather.WeatherViewModel
 import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.DbOperation

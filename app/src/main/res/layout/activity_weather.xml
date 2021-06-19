@@ -125,7 +125,6 @@
 
                         </LinearLayout>
 
-
                         <LinearLayout
                             android:id="@+id/llHWF"
                             android:layout_width="wrap_content"

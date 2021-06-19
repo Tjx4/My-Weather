@@ -1,6 +1,7 @@
 package com.globalkinetic.myweather.features.weather
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -10,7 +11,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
@@ -29,30 +29,24 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_weather.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyClickListener {
     private lateinit var binding: ActivityWeatherBinding
-    private lateinit var weatherViewModel: WeatherViewModel
-
+    private val weatherViewModel: WeatherViewModel by viewModel()
     private var locationRequest: LocationRequest? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var application = requireNotNull(this).application
-        var viewModelFactory = WeatherViewModelFactory(application)
-
-        weatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(
-            WeatherViewModel::class.java
-        )
         binding = DataBindingUtil.setContentView(this, R.layout.activity_weather)
         binding.weatherViewModel = weatherViewModel
         binding.lifecycleOwner = this
 
         addObservers()
         setSupportActionBar(toolbar)
-
         checkPlayServicesAndPermission()
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(rvHourly)
     }
 
     private fun checkPlayServicesAndPermission() {
@@ -90,6 +84,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
+    @SuppressLint("MissingPermission")
     fun initLocation() {
         val fusedLocationClient = getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -124,7 +119,7 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
 
     }
 
-    fun onLocationPermissionDenied() {
+    private fun onLocationPermissionDenied() {
         clContent.visibility = View.VISIBLE
         app_bar_layout.visibility = View.VISIBLE
 
@@ -138,14 +133,6 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
         }
     }
 
-
-
-
-
-
-
-
-
     private fun onLocationRequestListenerSuccess(location: Location?) {
         initActivity()
 
@@ -155,19 +142,15 @@ class WeatherActivity : BaseActivity(), LocationListener, HourlyAdapter.HourlyCl
             val currentLocation = getCurrentLocation(LatLng(lat, lon), this)
 
             val userLocation = UserLocationDetails(currentLocation, "", LatLng(lat, lon), "")
-
             weatherViewModel.checkAndSetLocation(userLocation)
         }
     }
 
-    fun initActivity() {
+    private fun initActivity() {
         locationRequest = LocationRequest()
         locationRequest?.interval = 20000
         locationRequest?.fastestInterval = 1000
         locationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-
-        val snapHelper: SnapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(rvHourly)
     }
 
     private fun addObservers() {

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
-import com.globalkinetic.myweather.helpers.getFormatedDate
+import com.globalkinetic.myweather.helpers.getFormattedDate
 import com.globalkinetic.myweather.models.Current
 import com.globalkinetic.myweather.models.DbOperation
 import com.globalkinetic.myweather.models.UserLocationDetails
@@ -94,7 +94,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
                 _weather.value = weather
                 _weather.value?.locationName = _userLocationDetails.value?.name
                 _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
-                _currentDateTime.value = getFormatedDate(weather?.current?.dt ?: 0)
+                _currentDateTime.value = getFormattedDate(weather?.current?.dt ?: 0)
                 _description.value = weather?.current?.weather?.get(0)?.description ?: ""
 
                 weather?.daily?.let {

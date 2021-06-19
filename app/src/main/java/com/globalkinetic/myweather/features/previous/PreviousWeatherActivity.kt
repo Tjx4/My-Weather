@@ -13,30 +13,21 @@ import com.globalkinetic.myweather.databinding.ActivityPreviousWeatherBinding
 import com.globalkinetic.myweather.models.Weather
 import kotlinx.android.synthetic.main.activity_previous_weather.*
 import kotlinx.android.synthetic.main.activity_previous_weather.toolbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PreviousWeatherActivity : BaseChildActivity(),
-    PreviousWeatherReportsAdapter.PreviousWeatherReportsClickListener {
+class PreviousWeatherActivity : BaseChildActivity(), PreviousWeatherReportsAdapter.PreviousWeatherReportsClickListener {
     private lateinit var binding: ActivityPreviousWeatherBinding
-    private lateinit var previousWeatherViewModel: PreviousWeatherViewModel
+    private val previousWeatherViewModel: PreviousWeatherViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var application = requireNotNull(this).application
-        var viewModelFactory = PreviousWeatherViewModelFactory(application)
-
-        previousWeatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(
-            PreviousWeatherViewModel::class.java
-        )
         binding = DataBindingUtil.setContentView(this, R.layout.activity_previous_weather)
         binding.previousWeatherViewModel = previousWeatherViewModel
         binding.lifecycleOwner = this
 
         addObservers()
-
         toolbar?.setNavigationOnClickListener { onBackPressed() }
         setSupportActionBar(toolbar)
-
         previousWeatherViewModel.getPreviousWeatherReports()
     }
 

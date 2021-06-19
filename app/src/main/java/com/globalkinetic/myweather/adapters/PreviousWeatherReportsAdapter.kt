@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.globalkinetic.myweather.R
-import com.globalkinetic.myweather.helpers.getFormatedDate
+import com.globalkinetic.myweather.helpers.getFormattedDate
 import com.globalkinetic.myweather.models.Weather
 
 class PreviousWeatherReportsAdapter(context: Context, private val previousWeatherReports: List<Weather>?) : RecyclerView.Adapter<PreviousWeatherReportsAdapter.ViewHolder>() {
@@ -24,7 +24,7 @@ class PreviousWeatherReportsAdapter(context: Context, private val previousWeathe
         val previousWeatherReport = previousWeatherReports?.get(position)
 
         holder.locationNameTv.text = previousWeatherReport?.locationName
-        holder.dateTimeTv.text = getFormatedDate(previousWeatherReport?.current?.dt ?: 0)
+        holder.dateTimeTv.text = getFormattedDate(previousWeatherReport?.current?.dt ?: 0)
         holder.descriptionTv.text = previousWeatherReport?.current?.weather?.get(0)?.description
         holder.precipTv.text = "${previousWeatherReport?.current?.humidity}%"
     }

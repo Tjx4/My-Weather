@@ -40,9 +40,9 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
     val dbError: MutableLiveData<String>
         get() = _dbError
 
-    private var _temprature: MutableLiveData<Int> = MutableLiveData()
-    val temprature: MutableLiveData<Int>
-        get() = _temprature
+    private var _temperature: MutableLiveData<Int> = MutableLiveData()
+    val temperature: MutableLiveData<Int>
+        get() = _temperature
 
     private var _weather: MutableLiveData<Weather?> = MutableLiveData()
     val weather: MutableLiveData<Weather?>
@@ -94,7 +94,7 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
             if (weather != null) {
                 _weather.value = weather
                 _weather.value?.locationName = _userLocationDetails.value?.name
-                _temprature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
+                _temperature.value = temperatureToSingleDecimal(weather?.current?.temp ?: 0.0)
                 _currentDateTime.value = getFormattedDate(weather?.current?.dt ?: 0)
                 _description.value = weather?.current?.weather?.get(0)?.description ?: ""
 

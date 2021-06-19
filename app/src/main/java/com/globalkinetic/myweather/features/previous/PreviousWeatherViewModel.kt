@@ -2,10 +2,13 @@ package com.globalkinetic.myweather.features.previous
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PreviousWeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(application) {
 
@@ -24,10 +27,10 @@ class PreviousWeatherViewModel(application: Application, private val weatherRepo
     fun getPreviousWeatherReports(){
         _showLoading.value = true
 
-        ioScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             var previousWeatherReports = weatherRepository.getPreviousWeatherReports()
 
-            uiScope.launch {
+            withContext(Dispatchers.Main) {
                 if(!previousWeatherReports.isNullOrEmpty()){
                     _previousWeatherReports.value = previousWeatherReports
                 }

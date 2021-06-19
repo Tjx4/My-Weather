@@ -24,7 +24,7 @@ interface PreviousWeatherDAO {
     fun getAllUsersLiveData(): LiveData<List<PreviousWeatherTable>>
 
     @Query("SELECT * FROM weather_reports ORDER BY id DESC")
-    fun getAllHeroes():List<PreviousWeatherTable>?
+    fun getAll():List<PreviousWeatherTable>?
 
     @Query("DELETE  FROM weather_reports")
     fun clear()

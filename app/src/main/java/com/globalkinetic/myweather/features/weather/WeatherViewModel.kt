@@ -2,6 +2,7 @@ package com.globalkinetic.myweather.features.weather
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.globalkinetic.myweather.base.viewmodels.BaseVieModel
 import com.globalkinetic.myweather.constants.API_KEY
 import com.globalkinetic.myweather.converter.temperatureToSingleDecimal
@@ -12,7 +13,9 @@ import com.globalkinetic.myweather.models.UserLocationDetails
 import com.globalkinetic.myweather.models.Weather
 import com.globalkinetic.myweather.repositories.WeatherRepository
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class WeatherViewModel(application: Application, private val weatherRepository: WeatherRepository) : BaseVieModel(
     application
@@ -76,14 +79,12 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
 
     fun showLoaderAndGetWeather(locationDetails: UserLocationDetails){
         _showLoading.value = true
-
         var currentCoordinates = locationDetails.coordinates ?: LatLng(0.0, 0.0)
 
-        ioScope.launch {
-
+         viewModelScope.launch(Dispatchers.IO) {
             var weather = weatherRepository.getWeather(API_KEY, currentCoordinates)
 
-            uiScope.launch {
+            withContext(Dispatchers.Main) {
                 setWeatherReport(weather)
             }
         }
@@ -116,10 +117,10 @@ class WeatherViewModel(application: Application, private val weatherRepository: 
 
     fun checkAndAddWeatherToPreviousList() {
         _weather?.value?.let {
-            ioScope.launch {
+             viewModelScope.launch(Dispatchers.IO) {
                 var addWeather = weatherRepository.addToPreviousWeatherReports(it)
 
-                uiScope.launch {
+                withContext(Dispatchers.Main) {
                     checkIsWeatherAddSuccessful(addWeather)
                 }
             }

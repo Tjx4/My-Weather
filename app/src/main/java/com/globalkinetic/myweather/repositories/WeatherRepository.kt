@@ -8,7 +8,7 @@ import com.globalkinetic.myweather.models.DbOperation
 import com.globalkinetic.myweather.models.Weather
 import com.google.android.gms.maps.model.LatLng
 
-open class WeatherRepository(var retrofitHelper: RetrofitHelper, var weatherDB: WeatherDB) {
+class WeatherRepository(var retrofitHelper: RetrofitHelper, var weatherDB: WeatherDB) {
 
     suspend fun getWeather(apiKey: String, latLng: LatLng) : Weather? {
         return try {
@@ -30,7 +30,7 @@ open class WeatherRepository(var retrofitHelper: RetrofitHelper, var weatherDB: 
     suspend fun getPreviousWeatherReports(): List<Weather>? {
         return try {
             val previousReports = ArrayList<Weather>()
-            weatherDB.previousWeatherDAO.getAllHeroes()?.let {
+            weatherDB.previousWeatherDAO.getAll()?.let {
                 for(previousWeather in  it){
                     previousReports.add(previousWeather.toWeather())
                 }
